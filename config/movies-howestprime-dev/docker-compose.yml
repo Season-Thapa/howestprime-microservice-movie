@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5000:5000
+    volumes:
+      - postgres:/data/postgres-howestprime-movies
+    env_file:
+      - .db-howestprime.env
+    networks:
+      - movies-howestprime-dev
+
+  lavinmq:
+    image: cloudamqp/lavinmq
+    restart: unless-stopped
+    networks:
+      - movies-howestprime-dev
+    ports:
+      - 15672:15672
+networks:
+  movies-howestprime-dev:
+    name: movies-howestprime-dev
+
+volumes:
+  postgres:
