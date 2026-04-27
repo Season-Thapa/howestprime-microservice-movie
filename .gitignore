@@ -484,3 +484,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+# Env
+.db-howestprime.env
