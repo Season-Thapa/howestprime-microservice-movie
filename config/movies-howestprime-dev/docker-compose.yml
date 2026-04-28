@@ -6,7 +6,7 @@ services:
     volumes:
       - postgres:/data/postgres-howestprime-movies
     env_file:
-      - .db-howestprime.env
+      - .movies-howestprime-dev.env
     networks:
       - movies-howestprime-dev
 
