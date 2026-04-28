@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Howestprime.Movies.Domain.Movies.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,7 +13,7 @@ public sealed class MovieRegistered
    int ageRating,
    int releaseYear,
    int duration,
-   List<Genre> genres,
+   List<Genres> genres,
    List<Actor> actors,
    string posterUrl
 ) : MovieDomainEvent(nameof(MovieRegistered))
@@ -23,7 +24,7 @@ public sealed class MovieRegistered
     public int AgeRating { get; init; } = ageRating;
     public int ReleaseYear { get; init; } = releaseYear;
     public int Duration { get; init; } = duration;
-    public List<Genre> Genres { get; init; } = genres;
+    public List<Genres> Genres { get; init; } = genres;
     public List<Actor> Actors { get; init; } = actors;
     public string PosterUrl { get; init; } = posterUrl;
 }

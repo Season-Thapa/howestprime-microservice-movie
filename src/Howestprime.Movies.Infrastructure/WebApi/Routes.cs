@@ -13,7 +13,7 @@ public static class Routes
     }
     private static RouteGroupBuilder MapMoviesRoutes(this IEndpointRouteBuilder app)
     {
-        RouteGroupBuilder movies = app.MapGroup("/movies")
+        RouteGroupBuilder movies = app.MapGroup("/movie-catalog")
         .WithTags("Movies")
         .WithDescription("All endpoints related to managing the movie catalog.");
 

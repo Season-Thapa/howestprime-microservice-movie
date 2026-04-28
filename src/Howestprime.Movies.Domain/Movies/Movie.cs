@@ -1,4 +1,5 @@
-﻿using Howestprime.Movies.Domain.Shared;
+﻿using Howestprime.Movies.Domain.Movies.ValueObjects;
+using Howestprime.Movies.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ public sealed class Movie : AggregateRoot<MovieId>
     public int AgeRating { get; private set; }
     public int ReleaseYear { get; private set; }
     public int Duration { get; private set; }
-    public List<Genre> Genres { get; private set; }
+    public List<Genres> Genres { get; private set; }
     public List<Actor> Actors { get; private set; }
     public string PosterUrl { get; private set; }
     public void Register(
@@ -22,7 +23,7 @@ public sealed class Movie : AggregateRoot<MovieId>
             int ageRating,
             int releaseYear,
             int duration,
-            List<Genre> genres,
+            List<Genres> genres,
             List<Actor> actors,
             string posterUrl
         )
