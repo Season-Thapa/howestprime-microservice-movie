@@ -8,8 +8,19 @@ public static class Routes
     public static IEndpointRouteBuilder MapRoutes(this IEndpointRouteBuilder app)
     {
         RouteGroupBuilder webApi = app.MapGroup("/api");
-
-
+        webApi.MapMoviesRoutes();
         return app;
     }
+    private static RouteGroupBuilder MapMoviesRoutes(this IEndpointRouteBuilder app)
+    {
+        RouteGroupBuilder movies = app.MapGroup("/movies")
+        .WithTags("Movies")
+        .WithDescription("All endpoints related to managing the movie catalog.");
+
+        movies.MapPost("/", RegisterMovieController.Invoke)
+            .WithName("RegisterMovie")
+            .WithDescription("Register a new movie in the catalog.");
+
+    }
+    
 }

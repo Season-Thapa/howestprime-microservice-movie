@@ -37,17 +37,28 @@ public sealed class Movie : AggregateRoot<MovieId>
         Asserts.EnsureNotEmpty(posterUrl);
         Movie movie = new (
             id  ?? EntityId.New<MovieId>(),
+            title,
+            description,
+            ageRating,
+            releaseYear,
+            duration,
+            genres,
+            actors,
+            posterUrl
             );
-        Id = movieId;
-        Title = title;
-        Description = description;
-        AgeRating = ageRating;
-        ReleaseYear = releaseYear;
-        Duration = duration;
-        Genres = genres;
-        Actors = actors;
-        PosterUrl = posterUrl;
-        
+        movie.ValidateState();
+        movie.RaiseDomainEvent(new MovieRegistered(
+            movie.Id,
+            movie.Title,
+            movie.Description,
+            movie.AgeRating,
+            movie.ReleaseYear,
+            movie.Duration,
+            movie.Genres,
+            movie.Actors,
+            movie.PosterUrl
+            ));
+
 
     }
 
