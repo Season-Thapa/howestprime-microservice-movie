@@ -4,7 +4,8 @@
 ## Get latest from `dotnet new gitignore`
 
 # dotenv files
-.env
+.env*
+*.env
 
 # User-specific files
 *.rsuser
@@ -484,5 +485,3 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
-# Env
-.db-howestprime.env
