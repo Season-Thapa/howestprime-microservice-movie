@@ -7,7 +7,8 @@ namespace Howestprime.Movies.Domain.Movies.Events
 {
     public abstract class MovieDomainEvent(string eventName) : BaseDomainEvent(
         eventName,
-        aggregateName: nameof(Movie)
+        aggregateName: nameof(Movie),
+        companyName: nameof(Howestprime)
     )
     {
     }

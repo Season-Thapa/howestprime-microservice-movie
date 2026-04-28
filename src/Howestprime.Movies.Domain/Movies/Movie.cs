@@ -13,11 +13,41 @@ public sealed class Movie : AggregateRoot<MovieId>
     public int AgeRating { get; private set; }
     public int ReleaseYear { get; private set; }
     public int Duration { get; private set; }
-    public List<string> Genres { get; private set; }
+    public List<Genre> Genres { get; private set; }
     public List<Actor> Actors { get; private set; }
     public string PosterUrl { get; private set; }
-    public void Register()
+    public void Register(
+            string title,
+            string description,
+            int ageRating,
+            int releaseYear,
+            int duration,
+            List<Genre> genres,
+            List<Actor> actors,
+            string posterUrl
+        )
     {
+        Asserts.EnsureNotEmpty(title);
+        Asserts.EnsureNotEmpty(description);
+        Asserts.EnsureGreaterThan(ageRating, 0);
+        Asserts.EnsureNotNegative(releaseYear);
+        Asserts.EnsureGreaterThan(duration, 0);
+        Asserts.EnsureNotEmpty(genres);
+        Asserts.EnsureNotEmpty(actors);
+        Asserts.EnsureNotEmpty(posterUrl);
+        Movie movie = new (
+            id  ?? EntityId.New<MovieId>(),
+            );
+        Id = movieId;
+        Title = title;
+        Description = description;
+        AgeRating = ageRating;
+        ReleaseYear = releaseYear;
+        Duration = duration;
+        Genres = genres;
+        Actors = actors;
+        PosterUrl = posterUrl;
+        
 
     }
 
