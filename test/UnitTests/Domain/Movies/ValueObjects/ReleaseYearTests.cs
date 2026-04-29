@@ -17,6 +17,15 @@ public class ReleaseYearTests
         Assert.Equal(releaseYearValue, releaseYear.Value);
     }
     [Fact]
+    public void Create_ShouldThrowArgumentException_WhenReleasesIsLowerThan1800()
+    {
+        // Arrange
+        int releaseYearValue = -1799;
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => ReleaseYear.Create(releaseYearValue));
+    }
+    [Fact]
     public void Create_ShouldThrowArgumentException_WhenReleasesIsNegative()
     {
         // Arrange

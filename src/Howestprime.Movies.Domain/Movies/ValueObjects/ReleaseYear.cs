@@ -8,8 +8,7 @@ public sealed record ReleaseYear(int Value) : ValueObject
 {
     public static ReleaseYear Create(int value)
     {
-        Asserts.EnsureNotNegative(value);
-        Asserts.EnsureNotEmpty(value);
+       Asserts.EnsureGreaterThan(value, 1800);
         return new ReleaseYear(value);
     }
 }
