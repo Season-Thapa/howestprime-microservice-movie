@@ -1,12 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Howestprime.Movies.Application.Contracts.Ports;
+using Howestprime.Movies.Application.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Movies;
 
 public record RegisterMovieRequest(
     [FromBody] RegisterMovieBody Body,
-    [FromService] IUseCase<RegisterMovieInput, Guid> UseCase);
+    [RegisterMovieRequest.FromService] IUseCase<RegisterMovieInput, Guid> UseCase)
+{
+    public class FromServiceAttribute : Attribute
+    {
+    }
+}
 
 public static class RegisterMovieController
 {
@@ -16,23 +28,23 @@ public static class RegisterMovieController
         RegisterMovieInput input = new RegisterMovieInput(
             request.Body.Title,
             request.Body.Description,
-            request.Body.ReleaseDate,
+            request.Body.AgeRating,
+            request.Body.ReleaseYear,
+            request.Body.Duration,
             request.Body.Genre,
             request.Body.Actor,
-            request.Body.Duration,
-            request.Body.AgeRating,
             request.Body.PosterUrl);
         Guid movieId = await request.UseCase.Execute(input);
         return TypedResults.Created($"/movies/{movieId}");
     }
 }
 public record RegisterMovieBody(
-    [Required]string Title,
+    [Required]MovieTitle Title,
     [Required] string Description,
-    [Required] int ReleaseDate,
+    [Required] ReleaseYear ReleaseYear,
     [Required] List<Genre> Genre,
     [Required] List<Actor> Actor,
-    [Required] int Duration,
-    [Required] int AgeRating,
-    [Required] string PosterUrl
+    [Required] Duration Duration,
+    [Required] AgeRating AgeRating,
+    [Required] PosterUrl PosterUrl
 );

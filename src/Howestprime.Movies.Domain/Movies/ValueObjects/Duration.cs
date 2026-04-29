@@ -5,8 +5,7 @@ using System.Text;
 
 namespace Howestprime.Movies.Domain.Movies.ValueObjects;
 public sealed record Duration(int Value) : ValueObject
-{
-    public int Value { get; init; } = Value;
+{ 
     public static Duration Create(int value)
     {
         Asserts.EnsureGreaterThan(value, 0);

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Howestprime.Movies.Domain.Movies;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Repositories;
 public sealed class MovieRepository(

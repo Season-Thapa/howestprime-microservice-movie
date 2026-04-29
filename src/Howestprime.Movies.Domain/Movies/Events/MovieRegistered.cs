@@ -13,8 +13,8 @@ public sealed class MovieRegistered
    AgeRating ageRating,
    ReleaseYear releaseYear,
    Duration duration,
-   Genres genres,
-   Actors actors,
+   IReadOnlyList<Genre> genres,
+   IReadOnlyList<Actor> actors,
    PosterUrl posterUrl
 ) : MovieDomainEvent(nameof(MovieRegistered))
 {
@@ -24,7 +24,7 @@ public sealed class MovieRegistered
     public AgeRating AgeRating { get; init; } = ageRating;
     public ReleaseYear ReleaseYear { get; init; } = releaseYear;
     public Duration Duration { get; init; } = duration;
-    public Genres Genres { get; init; } = genres;
-    public Actors Actors { get; init; } = actors;
+    public IReadOnlyList<Genre> Genres { get; init; } = genres;
+    public IReadOnlyList<Actor> Actors { get; init; } = actors;
     public PosterUrl PosterUrl { get; init; } = posterUrl;
 }

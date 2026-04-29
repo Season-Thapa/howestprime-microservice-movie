@@ -1,5 +1,6 @@
 using Aornis;
 using Howestprime.Movies.Application.Contracts.Ports;
+using Howestprime.Movies.Application.Movies;
 
 namespace Howestprime.Movies.Main.Modules.Application;
 

@@ -6,7 +6,6 @@ using System.Text;
 namespace Howestprime.Movies.Domain.Movies.ValueObjects;
 public sealed record ReleaseYear(int Value) : ValueObject
 {
-    public int Value { get; init; } = Value;
     public static ReleaseYear Create(int value)
     {
         Asserts.EnsureNotNegative(value);

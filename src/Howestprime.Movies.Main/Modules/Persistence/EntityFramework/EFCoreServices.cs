@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Howestprime.Movies.Application.Contracts.Ports;
+using Howestprime.Movies.Domain.Movies;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Vendors;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Interceptors;
+using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Repositories;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Seeders;
 
 namespace Howestprime.Movies.Main.Modules.Persistence.EntityFramework;

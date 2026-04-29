@@ -6,7 +6,6 @@ using System.Text;
 namespace Howestprime.Movies.Domain.Movies.ValueObjects;
 public sealed record AgeRating(int Value) : ValueObject
 {
-    public int Value { get; init; } = Value;
     public static AgeRating Create(int value)
     {
         Asserts.EnsureGreaterThan(value, 0);

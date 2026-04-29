@@ -1,4 +1,6 @@
 ﻿using Howestprime.Movies.Application.Contracts.Ports;
+using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,15 +19,14 @@ PosterUrl: URL to the movie poster.
  */
 
 public sealed record RegisterMovieInput(
-    Guid MovieId,
-    string Title,
+    MovieTitle Title,
     string Description,
-    int AgeRating,
-    int ReleaseYear,
-    int Duration,
-    List<string> Genres,
-    List<string> Actors,
-    string PosterUrl
+    AgeRating AgeRating,
+    ReleaseYear ReleaseYear,
+    Duration Duration,
+    List<Genre> Genres,
+    List<Actor> Actors,
+    PosterUrl PosterUrl
 );
 public sealed class RegisterMovie(
     IUnitOfWork uow
@@ -33,8 +34,7 @@ public sealed class RegisterMovie(
 {
     public async Task<Guid> Execute(RegisterMovieInput input)
     {
-        MovieId movieId = new(input.MovieId);
-        var movie = Movie.Create(
+        var movie = Movie.Register(
             input.Title,
             input.Description,
             input.AgeRating,
@@ -45,7 +45,7 @@ public sealed class RegisterMovie(
             input.PosterUrl
         );
         await uow.Save<IMovieRepository>(movie);
-        return movie.Id;
+        return movie.Id.Value;
     }
 }
 

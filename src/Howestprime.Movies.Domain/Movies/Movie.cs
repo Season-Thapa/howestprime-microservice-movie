@@ -1,4 +1,5 @@
-﻿using Howestprime.Movies.Domain.Movies.ValueObjects;
+﻿using Howestprime.Movies.Domain.Movies.Events;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 using System;
 using System.Collections.Generic;
@@ -14,22 +15,43 @@ public sealed class Movie : AggregateRoot<MovieId>
     public AgeRating AgeRating { get; private set; }
     public ReleaseYear ReleaseYear { get; private set; }
     public Duration Duration { get; private set; }
-    public Genres Genres { get; private set; }
-    public Actors Actors { get; private set; }
+    public IReadOnlyList<Genre> Genres { get; private set; }
+    public IReadOnlyList<Actor> Actors { get; private set; }
     public PosterUrl PosterUrl { get; private set; }
-    public void Register(
+    private Movie(
+        MovieId id,
+        MovieTitle title,
+        string description,
+        AgeRating ageRating,
+        ReleaseYear releaseYear,
+        Duration duration,
+        List<Genre> genres,
+        List<Actor> actors,
+        PosterUrl posterUrl
+    ) : base(id)
+    {
+        Title = title;
+        Description = description;
+        AgeRating = ageRating;
+        ReleaseYear = releaseYear;
+        Duration = duration;
+        Genres = genres.AsReadOnly();
+        Actors = actors.AsReadOnly();
+        PosterUrl = posterUrl;
+    }
+    public static Movie Register(
             MovieTitle title,
             string description,
             AgeRating ageRating,
             ReleaseYear releaseYear,
             Duration duration,
-            List<Genres> genres,
+            List<Genre> genres,
             List<Actor> actors,
             PosterUrl posterUrl
         )
     {
         Movie movie = new (
-            id  ?? EntityId.New<MovieId>(),
+           EntityId.New<MovieId>(),
             title,
             description,
             ageRating,
@@ -39,6 +61,7 @@ public sealed class Movie : AggregateRoot<MovieId>
             actors,
             posterUrl
             );
+        movie.ValidateState();
         movie.RaiseDomainEvent(new MovieRegistered(
             movie.Id,
             movie.Title,
@@ -50,8 +73,17 @@ public sealed class Movie : AggregateRoot<MovieId>
             movie.Actors,
             movie.PosterUrl
             ));
+        return movie;
 
 
+    }
+    public override void ValidateState()
+    {
+        Asserts.EnsureNotEmpty(Title);
+        Asserts.EnsureNotEmpty(PosterUrl);
+        Asserts.EnsureNotEmpty(PosterUrl);
+        Asserts.EnsureGreaterThan(Genres.Count, 0);
+        Asserts.EnsureGreaterThan(Actors.Count, 0);
     }
 
 }
