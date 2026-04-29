@@ -49,33 +49,62 @@ public sealed class MoviesTests
         Assert.Contains(movie.DomainEvents, e => e is MovieRegistered registered &&
         registered.MovieId.Equals(movie.Id) && registered.Title == title);
     }
-    //[Fact]
-    // public void  RegisterMovie_ShouldThrowException_WhenTitleIsEmpty()
-    // {
-    //     // Arrange
-    //     MovieTitle title = MovieTitle.Create("");
-    //     string description = "A mind-bending thriller about dreams within dreams.";
-    //     AgeRating ageRating = AgeRating.Create(13);
-    //     ReleaseYear releaseYear = ReleaseYear.Create(2010);
-    //     Duration duration = Duration.Create(148);
-    //     PosterUrl posterUrl = PosterUrl.Create("https://example.com/inception-poster.jpg");
-    //
-    //     List<Genre> genres = new()
-    //     {
-    //         Genre.Create("Action"),
-    //         Genre.Create("Sci-Fi"),
-    //         Genre.Create("Thriller")
-    //     };
-    //
-    //     List<Actor> actors = new()
-    //     {
-    //         Actor.Create("Leonardo DiCaprio"),
-    //         Actor.Create("Joseph Gordon-Levitt"),
-    //         Actor.Create("Elliot Page")
-    //     };
-    //     // Act & Assert
-    //     Assert.Throws<ArgumentException>(() => Movie.Register(title, description, ageRating, releaseYear, duration, genres, actors, posterUrl));
-    // }
+    [Fact]
+    public void Register_ShouldThrow_WhenGenresAreEmpty()
+    {
+        // Arrange
+        var actors = new List<Actor> { Actor.Create("Leonardo DiCaprio") };
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() =>
+            Movie.Register(
+                MovieTitle.Create("Inception"),
+                "Description",
+                AgeRating.Create(13),
+                ReleaseYear.Create(2010),
+                Duration.Create(148),
+                new List<Genre>(),
+                actors,
+                PosterUrl.Create("https://example.com/poster.jpg")
+            ));
+    }
+    [Fact]
+    public void Register_ShouldThrow_WhenActorsAreEmpty()
+    {
+        var genres = new List<Genre> { Genre.Create("Action") };
+
+        Assert.Throws<ArgumentException>(() =>
+            Movie.Register(
+                MovieTitle.Create("Inception"),
+                "Description",
+                AgeRating.Create(13),
+                ReleaseYear.Create(2010),
+                Duration.Create(148),
+                genres,
+                new List<Actor>(),
+                PosterUrl.Create("https://example.com/poster.jpg")
+            ));
+    }
+    [Fact]
+    public void Register_ShouldThrow_WhenTitleIsEmpty()
+    {
+        var genres = new List<Genre> { Genre.Create("Action") };
+        var actors = new List<Actor> { Actor.Create("Leonardo DiCaprio") };
+
+
+        Assert.Throws<ArgumentException>(() =>
+            Movie.Register(
+                MovieTitle.Create(""),
+                "Description",
+                AgeRating.Create(13),
+                ReleaseYear.Create(2010),
+                Duration.Create(148),
+                genres,
+                actors,
+                PosterUrl.Create("https://example.com/poster.jpg")
+            ));
+    }
+
 }
 
 
