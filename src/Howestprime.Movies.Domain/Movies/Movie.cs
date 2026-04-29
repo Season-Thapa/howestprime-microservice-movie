@@ -9,33 +9,25 @@ public readonly record struct MovieId(Guid Value) : IEntityId;
 
 public sealed class Movie : AggregateRoot<MovieId>
 {
-    public string Title { get; private set; }
+    public MovieTitle Title { get; private set; }
     public string Description { get; private set; }
-    public int AgeRating { get; private set; }
-    public int ReleaseYear { get; private set; }
-    public int Duration { get; private set; }
-    public List<Genres> Genres { get; private set; }
-    public List<Actor> Actors { get; private set; }
-    public string PosterUrl { get; private set; }
+    public AgeRating AgeRating { get; private set; }
+    public ReleaseYear ReleaseYear { get; private set; }
+    public Duration Duration { get; private set; }
+    public Genres Genres { get; private set; }
+    public Actors Actors { get; private set; }
+    public PosterUrl PosterUrl { get; private set; }
     public void Register(
-            string title,
+            MovieTitle title,
             string description,
-            int ageRating,
-            int releaseYear,
-            int duration,
+            AgeRating ageRating,
+            ReleaseYear releaseYear,
+            Duration duration,
             List<Genres> genres,
             List<Actor> actors,
-            string posterUrl
+            PosterUrl posterUrl
         )
     {
-        Asserts.EnsureNotEmpty(title);
-        Asserts.EnsureNotEmpty(description);
-        Asserts.EnsureGreaterThan(ageRating, 0);
-        Asserts.EnsureNotNegative(releaseYear);
-        Asserts.EnsureGreaterThan(duration, 0);
-        Asserts.EnsureNotEmpty(genres);
-        Asserts.EnsureNotEmpty(actors);
-        Asserts.EnsureNotEmpty(posterUrl);
         Movie movie = new (
             id  ?? EntityId.New<MovieId>(),
             title,
@@ -47,7 +39,6 @@ public sealed class Movie : AggregateRoot<MovieId>
             actors,
             posterUrl
             );
-        movie.ValidateState();
         movie.RaiseDomainEvent(new MovieRegistered(
             movie.Id,
             movie.Title,

@@ -41,6 +41,8 @@ public static class EFCoreServices
                     context,
                     logger
                 );
+                uow.RegisterRepository(
+                    sp.GetRequiredService<IMovieRepository>());
 
                 return uow;
             });
@@ -57,6 +59,7 @@ public static class EFCoreServices
         this IServiceCollection services
     )
     {
+        services.AddScoped<IMovieRepository, MovieRepository>();
         return services;
     }
 

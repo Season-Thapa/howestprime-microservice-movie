@@ -8,23 +8,23 @@ namespace Howestprime.Movies.Domain.Movies.Events;
 public sealed class MovieRegistered
 (
    MovieId movieId,
-   string title,
+   MovieTitle title,
    string description,
-   int ageRating,
-   int releaseYear,
-   int duration,
-   List<Genres> genres,
-   List<Actor> actors,
-   string posterUrl
+   AgeRating ageRating,
+   ReleaseYear releaseYear,
+   Duration duration,
+   Genres genres,
+   Actors actors,
+   PosterUrl posterUrl
 ) : MovieDomainEvent(nameof(MovieRegistered))
 {
     public MovieId MovieId { get; init; } = movieId;
-    public string Title { get; init; } = title;
+    public MovieTitle Title { get; init; } = title;
     public string Description { get; init; } = description;
-    public int AgeRating { get; init; } = ageRating;
-    public int ReleaseYear { get; init; } = releaseYear;
-    public int Duration { get; init; } = duration;
-    public List<Genres> Genres { get; init; } = genres;
-    public List<Actor> Actors { get; init; } = actors;
-    public string PosterUrl { get; init; } = posterUrl;
+    public AgeRating AgeRating { get; init; } = ageRating;
+    public ReleaseYear ReleaseYear { get; init; } = releaseYear;
+    public Duration Duration { get; init; } = duration;
+    public Genres Genres { get; init; } = genres;
+    public Actors Actors { get; init; } = actors;
+    public PosterUrl PosterUrl { get; init; } = posterUrl;
 }
