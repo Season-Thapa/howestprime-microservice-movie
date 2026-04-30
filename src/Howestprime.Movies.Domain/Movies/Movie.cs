@@ -15,8 +15,8 @@ public sealed class Movie : AggregateRoot<MovieId>
     public AgeRating AgeRating { get; private set; }
     public ReleaseYear ReleaseYear { get; private set; }
     public Duration Duration { get; private set; }
-    public IReadOnlyList<Genre> Genres { get; private set; }
-    public IReadOnlyList<Actor> Actors { get; private set; }
+    public List<Genre> Genres { get; private set; }
+    public List<Actor> Actors { get; private set; }
     public PosterUrl PosterUrl { get; private set; }
     private Movie(
         MovieId id,
@@ -35,9 +35,17 @@ public sealed class Movie : AggregateRoot<MovieId>
         AgeRating = ageRating;
         ReleaseYear = releaseYear;
         Duration = duration;
-        Genres = genres.AsReadOnly();
-        Actors = actors.AsReadOnly();
+        Genres = genres;
+        Actors = actors;
         PosterUrl = posterUrl;
+    }
+
+    // Parameterless constructor for EF Core
+        public Movie() : base(default)
+    {
+        // Initialize collections to empty lists to avoid nulls
+        Genres = new List<Genre>();
+        Actors = new List<Actor>();
     }
     public static Movie Register(
             MovieTitle title,
@@ -75,7 +83,6 @@ public sealed class Movie : AggregateRoot<MovieId>
             ));
         return movie;
 
-
     }
     public override void ValidateState()
     {
@@ -84,5 +91,7 @@ public sealed class Movie : AggregateRoot<MovieId>
         Asserts.EnsureGreaterThan(Genres.Count, 0);
         Asserts.EnsureGreaterThan(Actors.Count, 0);
     }
+
+
 
 }
