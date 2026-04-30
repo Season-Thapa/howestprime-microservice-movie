@@ -17,7 +17,7 @@ public class ActorTests
         // Act
         Actor result = actors[0];
         // Assert
-        Assert.Equal("Leonardo DiCaprio", result.Name);
+        Assert.Equal("Leonardo DiCaprio", result.Value);
     }
 
     [Fact]

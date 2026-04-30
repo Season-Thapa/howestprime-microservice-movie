@@ -22,6 +22,10 @@ public static class Routes
         movies.MapPost("/", RegisterMovieController.Invoke)
             .WithName("RegisterMovie")
             .WithDescription("Register a new movie in the catalog.");
+
+        movies.MapGet("/{movieId}", GetMovieController.Invoke)
+            .WithName("GetMovie")
+            .WithDescription("Get a movie by its ID.");
         return movies;
 
     }

@@ -7,17 +7,17 @@ namespace Howestprime.Movies.Domain.Movies.ValueObjects;
 
 public sealed record Actor : ValueObject
 {
-    public string Name { get; }
+    public string Value { get; }
 
-    private Actor(string name)
+    private Actor(string value)
     {
-        Name = name;
+        Value = value;
     }
 
-    public static Actor Create(string name)
+    public static Actor Create(string value)
     {
-        Asserts.EnsureNotEmpty(name);
-        return new Actor(name);
+        Asserts.EnsureNotEmpty(value);
+        return new Actor(value);
     }
 }
 

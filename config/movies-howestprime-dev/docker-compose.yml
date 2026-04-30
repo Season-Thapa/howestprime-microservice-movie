@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres
     ports:
-      - 5000:5000
+      - 40021:5432
     volumes:
       - postgres:/data/postgres-howestprime-movies
     env_file:
@@ -10,13 +10,14 @@ services:
     networks:
       - movies-howestprime-dev
 
-  lavinmq:
+  MessageBroker.movies-howestprime.dev:
     image: cloudamqp/lavinmq
     restart: unless-stopped
     networks:
       - movies-howestprime-dev
     ports:
-      - 15672:15672
+      - 40100:5672
+      - 40101:15672
 networks:
   movies-howestprime-dev:
     name: movies-howestprime-dev

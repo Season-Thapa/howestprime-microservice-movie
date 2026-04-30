@@ -7,16 +7,16 @@ namespace Howestprime.Movies.Domain.Movies.ValueObjects;
 
 public sealed record Genre : ValueObject
 {
-    public string Name { get; }
+    public string Value { get; }
 
-    private Genre(string name)
+    private Genre(string value)
     {
-        Name = name;
+        Value = value;
     }
 
-    public static Genre Create(string name)
+    public static Genre Create(string value)
     {
-        Asserts.EnsureNotEmpty(name);
-        return new Genre(name);
+        Asserts.EnsureNotEmpty(value);
+        return new Genre(value);
     }
 }

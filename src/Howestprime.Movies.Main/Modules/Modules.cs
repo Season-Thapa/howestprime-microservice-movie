@@ -13,11 +13,23 @@ public static class ModuleExtensions
         IConfiguration configuration
     )
     {
+        // Register all modules
+        services
+            .AddApplicationModule(configuration)
+            .AddDomainEventModule(configuration)
+            .AddMessagingModule(configuration)
+            .AddEFCoreModule(configuration)
+            .AddWebApiModule(configuration);
+
         return services;
     }
 
     public static async Task<WebApplication> UseModules(this WebApplication app)
     {
+        // Initialize modules that need startup actions
+        app = await app.UseEFCoreModule();
+        app = app.UseWebApiModule();
+
         return app;
     }
 }

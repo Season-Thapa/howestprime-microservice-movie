@@ -18,7 +18,7 @@ public class GenreTests
         // Act
         Genre result = genres[0];
         // Assert
-        Assert.Equal("Action", result.Name);
+        Assert.Equal("Action", result.Value);
     }
     [Fact]
     public void Create_ShouldThrowException_WhenValueIsEmpty()

@@ -31,19 +31,19 @@ public static class RegisterMovieController
             request.Body.AgeRating,
             request.Body.ReleaseYear,
             request.Body.Duration,
-            request.Body.Genre,
-            request.Body.Actor,
+            request.Body.Genres.Select(Genre.Create).ToList(),
+            request.Body.Actors.Select(Actor.Create).ToList(),
             request.Body.PosterUrl);
         Guid movieId = await request.UseCase.Execute(input);
-        return TypedResults.Created($"/movies/{movieId}");
+        return TypedResults.Created($"/api/movie-catalog/{movieId}");
     }
 }
 public record RegisterMovieBody(
     [Required]MovieTitle Title,
     [Required] string Description,
     [Required] ReleaseYear ReleaseYear,
-    [Required] List<Genre> Genre,
-    [Required] List<Actor> Actor,
+    [Required] List<string> Genres,
+    [Required] List<string> Actors,
     [Required] Duration Duration,
     [Required] AgeRating AgeRating,
     [Required] PosterUrl PosterUrl

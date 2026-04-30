@@ -11,6 +11,7 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
 {
     public void Configure(EntityTypeBuilder<Movie> builder)
     {
+        builder.ToTable("Movies");
         builder.HasKey(m => m.Id);
         builder.Property(m => m.Title).IsRequired();
         builder.Property(m => m.Description).IsRequired();
@@ -21,13 +22,13 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
         builder.OwnsMany(m => m.Actors, actorBuilder =>      
         {
             actorBuilder.ToJson();
-            actorBuilder.Property(a => a.Name);
+            actorBuilder.Property(a => a.Value);
         });
 
         builder.OwnsMany(m => m.Genres, genreBuilder =>
         {
             genreBuilder.ToJson();
-            genreBuilder.Property(g => g.Name);
+            genreBuilder.Property(g => g.Value);
         });
 
     }
