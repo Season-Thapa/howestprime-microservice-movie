@@ -17,19 +17,19 @@ public class ReleaseYearTests
         Assert.Equal(releaseYearValue, releaseYear.Value);
     }
     [Fact]
-    public void Create_ShouldThrowArgumentException_WhenReleasesIsLowerThan1800()
+    public void Create_ShouldThrowArgumentException_WhenReleasesIsNegative()
     {
         // Arrange
-        int releaseYearValue = -1799;
+        int releaseYearValue = -10;
 
         // Act & Assert
         Assert.Throws<ArgumentException>(() => ReleaseYear.Create(releaseYearValue));
     }
     [Fact]
-    public void Create_ShouldThrowArgumentException_WhenReleasesIsNegative()
+    public void Create_ShouldThrowArgumentException_WhenReleasesIsInTheFutureYear()
     {
         // Arrange
-        int releaseYearValue = -10;
+        int releaseYearValue = 2027;
 
         // Act & Assert
         Assert.Throws<ArgumentException>(() => ReleaseYear.Create(releaseYearValue));

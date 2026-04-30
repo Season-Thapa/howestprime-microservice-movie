@@ -80,8 +80,7 @@ public sealed class Movie : AggregateRoot<MovieId>
     public override void ValidateState()
     {
         Asserts.EnsureNotEmpty(Title);
-        Asserts.EnsureNotEmpty(PosterUrl);
-        Asserts.EnsureNotEmpty(PosterUrl);
+        Asserts.EnsureNotEmpty(Description);
         Asserts.EnsureGreaterThan(Genres.Count, 0);
         Asserts.EnsureGreaterThan(Actors.Count, 0);
     }
