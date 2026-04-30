@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\src\Howestprime.Movies.Infrastructure\Howestprime.Movies.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Shared\" />
+  </ItemGroup>
+
 </Project>

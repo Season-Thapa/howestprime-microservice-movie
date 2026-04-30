@@ -6,12 +6,12 @@ using Howestprime.Movies.Domain.Movies.ValueObjects;
 namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
 public sealed record Movie(
     Guid Id,
-    string Title,
+    MovieTitle Title,
     string Description,
-    int AgeRating,
-    int ReleaseYear,
-    int Duration,
+    AgeRating AgeRating,
+    ReleaseYear ReleaseYear,
+    Duration Duration,
     IReadOnlyList<Genre> Genres,
     IReadOnlyList<Actor> Actors,
-    string PosterUrl
+    PosterUrl PosterUrl
 );
