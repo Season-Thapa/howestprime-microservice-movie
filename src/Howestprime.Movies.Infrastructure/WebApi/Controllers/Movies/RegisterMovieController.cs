@@ -29,8 +29,8 @@ public static class RegisterMovieController
             request.Body.Title,
             request.Body.Description,
             request.Body.ReleaseYear,
-            request.Body.Duration,
             request.Body.AgeRating,
+            request.Body.Duration,
             request.Body.Genres,
             request.Body.Actors,
             request.Body.PosterUrl);
@@ -39,12 +39,12 @@ public static class RegisterMovieController
     }
 }
 public record RegisterMovieBody(
-    [Required] MovieTitle Title,
+    [Required] string Title,
     [Required] string Description,
-    [Required] ReleaseYear ReleaseYear,
-    [Required] List<Genre> Genres,
-    [Required] List<Actor> Actors,
-    [Required] Duration Duration,
-    [Required] AgeRating AgeRating,
-    [Required] PosterUrl PosterUrl
+    [Required] int ReleaseYear,
+    [Required] int AgeRating,
+    [Required] int Duration,
+    [Required] List<string> Genres,
+    [Required] List<string> Actors,
+    [Required] string PosterUrl
 );

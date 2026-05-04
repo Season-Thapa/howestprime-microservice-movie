@@ -41,8 +41,8 @@ public sealed class Movie : AggregateRoot<MovieId>
         MovieTitle title,
         string description,
         ReleaseYear releaseYear,
-        Duration duration,
         AgeRating ageRating,
+        Duration duration,
         List<Genre> genres,
         List<Actor> actors,
         PosterUrl posterUrl

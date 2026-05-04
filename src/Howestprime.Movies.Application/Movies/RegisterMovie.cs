@@ -6,14 +6,14 @@ namespace Howestprime.Movies.Application.Movies;
 
 
 public sealed record RegisterMovieInput(
-    MovieTitle Title,
+    string Title,
     string Description,
-    ReleaseYear ReleaseYear,
-    Duration Duration,
-    AgeRating AgeRating,
-    List<Genre> Genres,
-    List<Actor> Actors,
-    PosterUrl PosterUrl
+    int ReleaseYear,
+    int AgeRating,
+    int Duration,
+    List<string> Genres,
+    List<string> Actors,
+    string PosterUrl
 );
 
 public sealed class RegisterMovie(
@@ -23,14 +23,14 @@ public sealed class RegisterMovie(
     public async Task<Guid> Execute(RegisterMovieInput input)
     {
         var movie = Movie.Register(
-            input.Title,
+            MovieTitle.Create(input.Title),
             input.Description,
-            input.ReleaseYear,
-            input.Duration,
-            input.AgeRating,
-            input.Genres,
-            input.Actors,
-            input.PosterUrl
+            ReleaseYear.Create(input.ReleaseYear),
+            AgeRating.Create(input.AgeRating),
+            Duration.Create(input.Duration),
+            input.Genres.Select(Genre.Create).ToList(),
+            input.Actors.Select(Actor.Create).ToList(),
+            PosterUrl.Create(input.PosterUrl)
         );
         await uow.Save<IMovieRepository>(movie);
         await uow.Do();

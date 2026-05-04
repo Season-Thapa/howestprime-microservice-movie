@@ -37,4 +37,5 @@ public sealed class RegisterMovieIntegrationTest(
             Assert.Equal(genres, movie.Genres);
             Assert.Equal(movieId, movie.Id);
         }
+
 }

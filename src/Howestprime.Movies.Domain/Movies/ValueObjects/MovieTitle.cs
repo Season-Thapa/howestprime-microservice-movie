@@ -6,7 +6,6 @@ using System.Text;
 namespace Howestprime.Movies.Domain.Movies.ValueObjects;
 public sealed record MovieTitle(string Value) : ValueObject
 {
-
     public static MovieTitle Create(string value)
     {
         Asserts.EnsureNotEmpty(value);

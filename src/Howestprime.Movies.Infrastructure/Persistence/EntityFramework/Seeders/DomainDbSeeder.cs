@@ -22,8 +22,8 @@ public class DomainDbSeeder(DomainDbContext context, ILogger<DomainDbSeeder> log
                 MovieTitle.Create("Inception"),
                 "A mind-bending thriller about dreams within dreams.",
                 ReleaseYear.Create(2010),
-                Duration.Create(148),
                 AgeRating.Create(13),
+                Duration.Create(148),
                 new List<Genre> { Genre.Create("Action"), Genre.Create("Sci-Fi"), Genre.Create("Thriller") },
                 new List<Actor> { Actor.Create("Leonardo DiCaprio"), Actor.Create("Joseph Gordon-Levitt"), Actor.Create("Elliot Page") },
                 PosterUrl.Create("https://example.com/inception-poster.jpg")
@@ -32,8 +32,8 @@ public class DomainDbSeeder(DomainDbContext context, ILogger<DomainDbSeeder> log
                 MovieTitle.Create("The Matrix"),
                 "A computer hacker learns about the true nature of his reality.",
                 ReleaseYear.Create(1999),
-                Duration.Create(136),
                 AgeRating.Create(16),
+                Duration.Create(136),
                 new List<Genre> { Genre.Create("Action"), Genre.Create("Sci-Fi") },
                 new List<Actor> { Actor.Create("Keanu Reeves"), Actor.Create("Laurence Fishburne"), Actor.Create("Carrie-Anne Moss") },
                 PosterUrl.Create("https://example.com/matrix-poster.jpg")
@@ -42,8 +42,8 @@ public class DomainDbSeeder(DomainDbContext context, ILogger<DomainDbSeeder> log
                 MovieTitle.Create("Interstellar"),
                 "A team of astronauts travel through a wormhole to save humanity.",
                 ReleaseYear.Create(2014),
-                Duration.Create(169),
                 AgeRating.Create(12),
+                Duration.Create(169),
                 new List<Genre> { Genre.Create("Science Fiction"), Genre.Create("Drama"), Genre.Create("Adventure") },
                 new List<Actor> { Actor.Create("Matthew McConaughey"), Actor.Create("Anne Hathaway"), Actor.Create("Jessica Chastain") },
                 PosterUrl.Create("https://example.com/interstellar-poster.jpg")
