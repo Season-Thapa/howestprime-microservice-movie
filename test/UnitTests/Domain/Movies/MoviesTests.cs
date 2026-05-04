@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using Howestprime.Movies.Domain.Movies;
 using Howestprime.Movies.Domain.Movies.Events;
 using Howestprime.Movies.Domain.Movies.ValueObjects;
-using UnitTests.Domain.Shared;
 
 namespace UnitTests.Domain.Movies;
 
@@ -16,8 +13,8 @@ public sealed class MoviesTests
         // Arrange
         MovieTitle title = MovieTitle.Create("Inception");
         string description = "A mind-bending thriller about dreams within dreams.";
-        AgeRating ageRating = AgeRating.Create(13);
         ReleaseYear releaseYear = ReleaseYear.Create(2010);
+        AgeRating ageRating = AgeRating.Create(13);
         Duration duration = Duration.Create(148);
         PosterUrl posterUrl = PosterUrl.Create("https://example.com/inception-poster.jpg");
 
@@ -35,7 +32,7 @@ public sealed class MoviesTests
             Actor.Create("Elliot Page")
         };
         // Act
-        Movie movie = Movie.Register(title, description, ageRating, releaseYear, duration, genres, actors, posterUrl);
+        Movie movie = Movie.Register(title, description, releaseYear,   duration,ageRating, genres, actors, posterUrl);
         // Assert
         Assert.NotNull(movie);
         Assert.Equal(title, movie.Title);
@@ -60,9 +57,9 @@ public sealed class MoviesTests
             Movie.Register(
                 MovieTitle.Create("Inception"),
                 "Description",
-                AgeRating.Create(13),
                 ReleaseYear.Create(2010),
                 Duration.Create(148),
+                AgeRating.Create(13),
                 new List<Genre>(),
                 actors,
                 PosterUrl.Create("https://example.com/poster.jpg")
@@ -77,9 +74,9 @@ public sealed class MoviesTests
             Movie.Register(
                 MovieTitle.Create("Inception"),
                 "Description",
-                AgeRating.Create(13),
                 ReleaseYear.Create(2010),
                 Duration.Create(148),
+                AgeRating.Create(13),
                 genres,
                 new List<Actor>(),
                 PosterUrl.Create("https://example.com/poster.jpg")
@@ -96,9 +93,9 @@ public sealed class MoviesTests
             Movie.Register(
                 MovieTitle.Create(""),
                 "Description",
-                AgeRating.Create(13),
                 ReleaseYear.Create(2010),
                 Duration.Create(148),
+                AgeRating.Create(13),
                 genres,
                 actors,
                 PosterUrl.Create("https://example.com/poster.jpg")
@@ -106,5 +103,3 @@ public sealed class MoviesTests
     }
 
 }
-
-

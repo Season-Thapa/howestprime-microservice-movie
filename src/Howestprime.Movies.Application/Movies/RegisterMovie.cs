@@ -1,33 +1,21 @@
 ﻿using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Domain.Movies;
 using Howestprime.Movies.Domain.Movies.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Howestprime.Movies.Application.Movies;
 
-/*
-MovieId: Id of the movie.
-Title: Title of the movie.
-ReleaseYear: Release year.
-Duration: Duration in minutes.
-Genres: List of genres separated by commas.
-Actors: List of actors separated by commas.
-AgeRating: Age rating of the movie.
-PosterUrl: URL to the movie poster.
- */
 
 public sealed record RegisterMovieInput(
     MovieTitle Title,
     string Description,
-    AgeRating AgeRating,
     ReleaseYear ReleaseYear,
     Duration Duration,
+    AgeRating AgeRating,
     List<Genre> Genres,
     List<Actor> Actors,
     PosterUrl PosterUrl
 );
+
 public sealed class RegisterMovie(
     IUnitOfWork uow
     ) : IUseCase<RegisterMovieInput, Guid>
@@ -37,14 +25,16 @@ public sealed class RegisterMovie(
         var movie = Movie.Register(
             input.Title,
             input.Description,
-            input.AgeRating,
             input.ReleaseYear,
             input.Duration,
+            input.AgeRating,
             input.Genres,
             input.Actors,
             input.PosterUrl
         );
         await uow.Save<IMovieRepository>(movie);
+        await uow.Do();
+
         return movie.Id.Value;
     }
 }

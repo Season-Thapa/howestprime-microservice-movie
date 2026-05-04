@@ -7,7 +7,17 @@ public sealed class MovieApiClient(HttpClient client)
 {
         public async Task<Guid> RegisterMovieAsync(MovieTitle title,string description,AgeRating ageRating,ReleaseYear releaseYear,Duration duration,List<Genre> genres,List<Actor> actors,PosterUrl posterUrl)
         {
-            var body = new { MovieTitle = title, Description = description, AgeRating = ageRating, ReleaseYear = releaseYear, Duration = duration, Genres = genres, Actors = actors, PosterUrl = posterUrl };
+            var body = new
+            {
+                Title = title,
+                Description = description,
+                ReleaseYear = releaseYear,
+                Genres = genres,
+                Actors = actors,
+                Duration = duration,
+                AgeRating = ageRating,
+                PosterUrl = posterUrl
+            };
             HttpResponseMessage response = await client.PostAsJsonAsync("/api/movie-catalog", body, TestUtils.JsonOptions);
             response.EnsureSuccessStatusCode();
             return TestUtils.ExtractIdFromLocation(response.Headers.Location);

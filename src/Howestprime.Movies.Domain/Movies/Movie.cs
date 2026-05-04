@@ -1,10 +1,6 @@
 ﻿using Howestprime.Movies.Domain.Movies.Events;
 using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Howestprime.Movies.Domain.Movies;
 public readonly record struct MovieId(Guid Value) : IEntityId;
 
@@ -15,18 +11,21 @@ public sealed class Movie : AggregateRoot<MovieId>
     public AgeRating AgeRating { get; private set; }
     public ReleaseYear ReleaseYear { get; private set; }
     public Duration Duration { get; private set; }
-    public List<Genre> Genres { get; private set; }
-    public List<Actor> Actors { get; private set; }
+    private readonly List<Genre> _genres = [];
+    public IReadOnlyList<Genre> Genres => _genres.AsReadOnly();
+    
+    private readonly List<Actor> _actors = [];
+    public IReadOnlyList<Actor> Actors => _actors.AsReadOnly();
     public PosterUrl PosterUrl { get; private set; }
+    private Movie() { }
+
     private Movie(
         MovieId id,
         MovieTitle title,
         string description,
-        AgeRating ageRating,
         ReleaseYear releaseYear,
+        AgeRating ageRating,
         Duration duration,
-        List<Genre> genres,
-        List<Actor> actors,
         PosterUrl posterUrl
     ) : base(id)
     {
@@ -35,50 +34,41 @@ public sealed class Movie : AggregateRoot<MovieId>
         AgeRating = ageRating;
         ReleaseYear = releaseYear;
         Duration = duration;
-        Genres = genres;
-        Actors = actors;
         PosterUrl = posterUrl;
     }
-
-    // Parameterless constructor for EF Core
-        public Movie() : base(default)
-    {
-        // Initialize collections to empty lists to avoid nulls
-        Genres = new List<Genre>();
-        Actors = new List<Actor>();
-    }
+    
     public static Movie Register(
-            MovieTitle title,
-            string description,
-            AgeRating ageRating,
-            ReleaseYear releaseYear,
-            Duration duration,
-            List<Genre> genres,
-            List<Actor> actors,
-            PosterUrl posterUrl
+        MovieTitle title,
+        string description,
+        ReleaseYear releaseYear,
+        Duration duration,
+        AgeRating ageRating,
+        List<Genre> genres,
+        List<Actor> actors,
+        PosterUrl posterUrl
         )
     {
-        Movie movie = new (
+        Movie movie = new Movie(
            EntityId.New<MovieId>(),
             title,
             description,
-            ageRating,
             releaseYear,
+            ageRating,
             duration,
-            genres,
-            actors,
             posterUrl
             );
+
+        movie._genres.AddRange(genres);
+        movie._actors.AddRange(actors);
+
         movie.ValidateState();
         movie.RaiseDomainEvent(new MovieRegistered(
             movie.Id,
             movie.Title,
             movie.Description,
-            movie.AgeRating,
             movie.ReleaseYear,
+            movie.AgeRating,
             movie.Duration,
-            movie.Genres,
-            movie.Actors,
             movie.PosterUrl
             ));
         return movie;

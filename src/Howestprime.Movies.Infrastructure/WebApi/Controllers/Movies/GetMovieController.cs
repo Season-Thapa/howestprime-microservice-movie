@@ -27,8 +27,8 @@ public static class GetMovieController
             movie.AgeRating,
             movie.ReleaseYear,
             movie.Duration,
-            movie.Genres,
-            movie.Actors,
+            movie.Genres.ToList(),
+            movie.Actors.ToList(),
             movie.PosterUrl
         );
         return TypedResults.Ok(response);

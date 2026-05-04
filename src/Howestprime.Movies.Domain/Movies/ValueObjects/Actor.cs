@@ -5,14 +5,8 @@ using System.Text;
 
 namespace Howestprime.Movies.Domain.Movies.ValueObjects;
 
-public sealed record Actor : ValueObject
+public sealed record Actor(string Value) : ValueObject
 {
-    public string Value { get; }
-
-    private Actor(string value)
-    {
-        Value = value;
-    }
 
     public static Actor Create(string value)
     {

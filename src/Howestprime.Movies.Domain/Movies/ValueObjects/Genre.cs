@@ -5,14 +5,8 @@ using System.Text;
 
 namespace Howestprime.Movies.Domain.Movies.ValueObjects;
 
-public sealed record Genre : ValueObject
+public sealed record Genre(string Value) : ValueObject
 {
-    public string Value { get; }
-
-    private Genre(string value)
-    {
-        Value = value;
-    }
 
     public static Genre Create(string value)
     {

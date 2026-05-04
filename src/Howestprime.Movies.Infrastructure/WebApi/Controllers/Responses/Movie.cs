@@ -11,7 +11,7 @@ public sealed record Movie(
     AgeRating AgeRating,
     ReleaseYear ReleaseYear,
     Duration Duration,
-    IReadOnlyList<Genre> Genres,
-    IReadOnlyList<Actor> Actors,
+    List<Genre> Genres,
+    List<Actor> Actors,
     PosterUrl PosterUrl
 );

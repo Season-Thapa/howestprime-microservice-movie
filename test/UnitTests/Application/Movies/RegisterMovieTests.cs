@@ -1,4 +1,4 @@
-﻿using Howestprime.Movies.Application.Movies;
+﻿﻿using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Domain.Movies;
 using Howestprime.Movies.Domain.Movies.Events;
 using Howestprime.Movies.Domain.Movies.ValueObjects;
@@ -42,9 +42,9 @@ public sealed class RegisterMovieTests
         return new RegisterMovieInput(
             MovieTitle.Create("Inception"),
             "A mind-bending thriller about dreams within dreams.",
-            AgeRating.Create(13),
             ReleaseYear.Create(2010),
             Duration.Create(148),
+            AgeRating.Create(13),
             new List<Genre>
             {
                 Genre.Create("Action"),

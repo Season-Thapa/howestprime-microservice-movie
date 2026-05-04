@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Howestprime.Movies.Infrastructure.WebApi.Controllers.Responses;
+using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,13 +14,10 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
     {
         builder.ToTable("Movies");
         builder.HasKey(m => m.Id);
-        builder.Property(m => m.Title).IsRequired();
-        builder.Property(m => m.Description).IsRequired();
-        builder.Property(m => m.AgeRating).IsRequired();
-        builder.Property(m => m.ReleaseYear).IsRequired();
-        builder.Property(m => m.Duration).IsRequired();
-        builder.Property(m => m.PosterUrl).IsRequired();
-        builder.OwnsMany(m => m.Actors, actorBuilder =>      
+        
+        
+        // Configure owned collections as JSON
+        builder.OwnsMany(m => m.Actors, actorBuilder =>
         {
             actorBuilder.ToJson();
             actorBuilder.Property(a => a.Value);
