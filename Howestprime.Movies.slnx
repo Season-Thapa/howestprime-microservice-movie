@@ -6,6 +6,7 @@
     <Project Path="src/Howestprime.Movies.Main/Howestprime.Movies.Main.csproj" />
   </Folder>
   <Folder Name="/test/">
+    <Project Path="test/IntegrationTest/IntegrationTest.csproj" />
     <Project Path="test/UnitTests/UnitTests.csproj" />
   </Folder>
 </Solution>
