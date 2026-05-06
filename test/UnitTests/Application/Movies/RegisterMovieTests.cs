@@ -26,12 +26,12 @@ public sealed class RegisterMovieTests
         Assert.Equal(1, fakeUow.SaveCalls);
         Assert.NotNull(fakeUow.SavedAggregateRoot);
         Movie savedMovie = Assert.IsType<Movie>(fakeUow.SavedAggregateRoot);
-        Assert.Equal(input.Title, savedMovie.Title);
+        Assert.Equal(input.Title, savedMovie.Title.Value);
         Assert.Equal(input.Description, savedMovie.Description);
-        Assert.Equal(input.AgeRating, savedMovie.AgeRating);
-        Assert.Equal(input.ReleaseYear, savedMovie.ReleaseYear);
-        Assert.Equal(input.Duration, savedMovie.Duration);
-        Assert.Equal(input.PosterUrl, savedMovie.PosterUrl);
+        Assert.Equal(input.AgeRating, savedMovie.AgeRating.Value);
+        Assert.Equal(input.ReleaseYear, savedMovie.ReleaseYear.Value);
+        Assert.Equal(input.Duration, savedMovie.Duration.Value);
+        Assert.Equal(input.PosterUrl, savedMovie.PosterUrl.Value);
 
         Assert.Equal(input.Genres.Count, savedMovie.Genres.Count);
         Assert.Equal(input.Actors.Count, savedMovie.Actors.Count);
@@ -40,24 +40,24 @@ public sealed class RegisterMovieTests
     private static RegisterMovieInput CreateValidInput()
     {
         return new RegisterMovieInput(
-            MovieTitle.Create("Inception"),
+            "Inception",
             "A mind-bending thriller about dreams within dreams.",
-            ReleaseYear.Create(2010),
-            Duration.Create(148),
-            AgeRating.Create(13),
-            new List<Genre>
+            2010,
+            13,
+            148,
+            new List<string>
             {
-                Genre.Create("Action"),
-                Genre.Create("Sci-Fi"),
-                Genre.Create("Thriller")
+               "Action",
+                "Sci-Fi",
+                    "Thriller"
             },
-            new List<Actor>
+            new List<string>
             {
-                Actor.Create("Leonardo DiCaprio"),
-                Actor.Create("Joseph Gordon-Levitt"),
-                Actor.Create("Elliot Page")
+                "Leonardo DiCapri",
+                "Joseph Gordon-Levitt",
+                "Elliot Page"
             },
-            PosterUrl.Create("https://example.com/inception-poster.jpg")
+            "https://example.com/inception-poster.jpg"
         );
     }
     [Fact]

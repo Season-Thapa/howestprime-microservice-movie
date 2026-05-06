@@ -32,7 +32,7 @@ public sealed class MoviesTests
             Actor.Create("Elliot Page")
         };
         // Act
-        Movie movie = Movie.Register(title, description, releaseYear,   duration,ageRating, genres, actors, posterUrl);
+        Movie movie = Movie.Register(title, description, releaseYear, ageRating, duration, genres, actors, posterUrl);
         // Assert
         Assert.NotNull(movie);
         Assert.Equal(title, movie.Title);
@@ -58,8 +58,8 @@ public sealed class MoviesTests
                 MovieTitle.Create("Inception"),
                 "Description",
                 ReleaseYear.Create(2010),
-                Duration.Create(148),
                 AgeRating.Create(13),
+                Duration.Create(148),
                 new List<Genre>(),
                 actors,
                 PosterUrl.Create("https://example.com/poster.jpg")
@@ -75,8 +75,8 @@ public sealed class MoviesTests
                 MovieTitle.Create("Inception"),
                 "Description",
                 ReleaseYear.Create(2010),
-                Duration.Create(148),
                 AgeRating.Create(13),
+                Duration.Create(148),
                 genres,
                 new List<Actor>(),
                 PosterUrl.Create("https://example.com/poster.jpg")
@@ -94,8 +94,8 @@ public sealed class MoviesTests
                 MovieTitle.Create(""),
                 "Description",
                 ReleaseYear.Create(2010),
-                Duration.Create(148),
                 AgeRating.Create(13),
+                Duration.Create(148),
                 genres,
                 actors,
                 PosterUrl.Create("https://example.com/poster.jpg")
