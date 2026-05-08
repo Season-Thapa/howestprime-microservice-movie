@@ -6,14 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries;
 
-public sealed class SearchMovieCatalogQuery(
-    QueryDbContext context
-    ):ISearchMovieCatalogQuery
+public sealed class SearchMovieCatalogQuery : ISearchMovieCatalogQuery
 {
+    private readonly QueryDbContext _context;
+
+    public SearchMovieCatalogQuery(QueryDbContext context)
+    {
+        _context = context;
+    }
+
     public async Task<IReadOnlyList<MovieData>> Fetch(Expression<Func<MovieData, bool>> movieFilter)
     {
-        return await context.Movies
-            .Where(movieFilter)
-            .ToListAsync();
+        var movies = await _context.Movies.ToListAsync();
+
+        return movies
+            .AsQueryable()
+            .Where(movieFilter.Compile())
+            .ToList();
     }
 }

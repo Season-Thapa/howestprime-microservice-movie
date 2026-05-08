@@ -1,6 +1,4 @@
 ﻿using System.Linq.Expressions;
-using System.Linq;
-using Howestprime.Movies.Application.Contracts.Data;
 
 namespace Howestprime.Movies.Application.Contracts.Data.Filters;
 
@@ -8,10 +6,11 @@ public static class MovieDataFilters
 {
     public static Expression<Func<MovieData, bool>> ByTitleAndGenres(string title, IReadOnlyList<GenreData> genres)
     {
-        var genreValues = genres?.Select(g => g.Value).ToList() ?? new List<string>();
+        var normalizedTitle = title.Trim().ToLowerInvariant();
+        var genreValues = genres.Select(g => g.Value.Trim().ToLowerInvariant()).ToList();
 
         return movie =>
-            (string.IsNullOrEmpty(title) || movie.Title.Contains(title))
-            && (genreValues.Count == 0 || movie.Genres.Any(g => genreValues.Contains(g.Value)));
+            (string.IsNullOrEmpty(normalizedTitle) || (movie.Title != null && movie.Title.ToLower().Contains(normalizedTitle)))
+            && (genreValues.Count == 0 || (movie.Genres != null && movie.Genres.Any(g => g.Value != null && genreValues.Contains(g.Value.ToLower()))));
     }
 }

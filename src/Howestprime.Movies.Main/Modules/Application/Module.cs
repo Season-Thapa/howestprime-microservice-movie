@@ -1,6 +1,8 @@
 using Aornis;
+using System.Collections.Generic;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.Movies;
+using Howestprime.Movies.Application.Contracts.Data;
 
 namespace Howestprime.Movies.Main.Modules.Application;
 
@@ -14,6 +16,7 @@ public static class ApplicationModule
         // Register command use cases
         services.AddScoped<IUseCase<RegisterMovieInput, Guid>, RegisterMovie>();     
         // Register query use cases
+        services.AddScoped<IUseCase<SearchMovieCatalogInput, IReadOnlyList<MovieData>>, SearchMovieCatalog>();
         // Register Policies (example of automatic registration with reflection at boot time)
         services.RegisterPolicies();
 
