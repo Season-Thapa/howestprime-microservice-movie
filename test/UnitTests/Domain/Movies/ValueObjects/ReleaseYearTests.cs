@@ -8,7 +8,7 @@ public class ReleaseYearTests
     public void Create_ShouldCreateDuration_WhenReleaseYear()
     {
         // Arrange
-        int releaseYearValue = 2002;;
+        int releaseYearValue = DateTime.UtcNow.Year - 1;
 
         // Act
         ReleaseYear releaseYear = ReleaseYear.Create(releaseYearValue);
@@ -29,7 +29,7 @@ public class ReleaseYearTests
     public void Create_ShouldThrowArgumentException_WhenReleasesIsInTheFutureYear()
     {
         // Arrange
-        int releaseYearValue = 2027;
+        int releaseYearValue = DateTime.UtcNow.Year + 1;
 
         // Act & Assert
         Assert.Throws<ArgumentException>(() => ReleaseYear.Create(releaseYearValue));

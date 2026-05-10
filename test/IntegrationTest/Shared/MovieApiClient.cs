@@ -5,7 +5,7 @@ namespace IntegrationTest.Shared;
 
 public sealed class MovieApiClient(HttpClient client)
 {
-        public async Task<Guid> RegisterMovieAsync(MovieTitle title,string description,AgeRating ageRating,ReleaseYear releaseYear,Duration duration,List<Genre> genres,List<Actor> actors,PosterUrl posterUrl)
+        public async Task<Guid> RegisterMovieAsync(string title,string description,int ageRating,int releaseYear,int duration,List<string> genres,List<string> actors,string posterUrl)
         {
             var body = new
             {
@@ -27,18 +27,28 @@ public sealed class MovieApiClient(HttpClient client)
     {
         var response = await client.GetAsync($"/api/movie-catalog/{movieId}");
         response.EnsureSuccessStatusCode();
-        return await TestUtils.ReadAsAsync<MovieResponse>(response);
+        
+        var wrapper = await TestUtils.ReadAsAsync<SearchMovieCollection>(response);
+        if (wrapper.Data is null || wrapper.Data.Count == 0)
+            throw new InvalidOperationException("Response did not contain any movie data.");
+
+        return wrapper.Data[0];
     }
 }
 public sealed record MovieResponse
 {
     public Guid Id { get; init; }
-    public MovieTitle Title { get; init; }
+    public string Title { get; init; }
     public string Description { get; init; }
-    public AgeRating AgeRating { get; init; }
-    public ReleaseYear ReleaseYear { get; init; }
-    public Duration Duration { get; init; }
-    public List<Genre> Genres { get; init; }
-    public List<Actor> Actors { get; init; }
-    public PosterUrl PosterUrl { get; init; }
+    public int AgeRating { get; init; }
+    public int ReleaseYear { get; init; }
+    public int Duration { get; init; }
+    public List<string> Genres { get; init; }
+    public List<string> Actors { get; init; }
+    public string PosterUrl { get; init; }
+}
+
+public sealed record SearchMovieCollection
+{
+    public List<MovieResponse> Data { get; init; } = new();
 }

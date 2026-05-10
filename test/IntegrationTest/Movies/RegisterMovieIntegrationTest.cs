@@ -13,20 +13,21 @@ public sealed class RegisterMovieIntegrationTest(
         public async Task RegisterMovie_ShouldSucceed()
         {
             // Arrange
-            MovieTitle title = MovieTitle.Create("The Matrix");
-            ReleaseYear releaseYear = ReleaseYear.Create(1999);
-            AgeRating ageRating = AgeRating.Create(16);
-            var actors = new List<Actor> { Actor.Create("Keanu Reeves"), Actor.Create("Laurence Fishburne") };
-            var genres = new List<Genre> { Genre.Create("Action"), Genre.Create("Action") };
+            string title = "The Matrix";
+            int releaseYear = 1999;
+            int ageRating = 16;
+            var actors = new List<string> { "Keanu Reeves", "Laurence Fishburne" };
+            var genres = new List<string> { "Action", "Action" };
             string description = "A computer hacker learns about the true nature of his reality and his role in the war against its controllers.";
-            Duration duration = Duration.Create(136);
-            PosterUrl posterUrl = PosterUrl.Create("https://example.com/matrix-poster.jpg");
+            int duration = 136;
+            string posterUrl = "https://example.com/matrix-poster.jpg";
 
             // Act
             Guid movieId = await _client.RegisterMovieAsync(title, description, ageRating, releaseYear, duration, genres, actors, posterUrl);
             var movie = await _client.GetMovieAsync(movieId);
             // Assert 
             Assert.NotNull(movie);
+            Assert.Equal(movie, movie);
             Assert.Equal(title, movie.Title);
             Assert.Equal(description, movie.Description);
             Assert.Equal(ageRating, movie.AgeRating);
