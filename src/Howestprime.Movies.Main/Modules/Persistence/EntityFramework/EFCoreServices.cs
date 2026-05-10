@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Howestprime.Movies.Application.Contracts.Ports;
+using Howestprime.Movies.Domain.MovieEvent;
 using Howestprime.Movies.Domain.Movies;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration;
@@ -46,6 +47,8 @@ public static class EFCoreServices
                 );
                 uow.RegisterRepository(
                     sp.GetRequiredService<IMovieRepository>());
+                uow.RegisterRepository(
+                    sp.GetRequiredService<IMovieEventRepository>());
 
                 return uow;
             });
@@ -63,6 +66,7 @@ public static class EFCoreServices
     )
     {
         services.AddScoped<IMovieRepository, MovieRepository>();
+        services.AddScoped<IMovieEventRepository, MovieEventRepository>();
         return services;
     }
 

@@ -1,3 +1,4 @@
+using Howestprime.Movies.Domain.MovieEvent;
 using Howestprime.Movies.Domain.Movies;
 using Microsoft.EntityFrameworkCore;
 using Howestprime.Movies.Domain.Shared.DomainEvents;
@@ -9,6 +10,8 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configur
 public abstract class DomainDbContext : DbContext
 {
     public DbSet<Movie>  Movies { get; set; }
+    public DbSet<MovieEvent> MovieEvents { get; set; }
+    public DbSet<Room> Rooms { get; set; }
     private readonly Queue<IDomainEvent> _queuedDomainEvents = new();
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
@@ -22,7 +25,10 @@ public abstract class DomainDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
-            .ApplyConfiguration(new MovieConfiguration());
+            .ApplyConfiguration(new MovieConfiguration())
+            .ApplyConfiguration(new MovieEventConfiguration())
+            .ApplyConfiguration(new RoomConfiguration());
+        
         base.OnModelCreating(modelBuilder);
     }
 
