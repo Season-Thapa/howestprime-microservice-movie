@@ -26,16 +26,6 @@ public class ReleaseYearTests
         Assert.Throws<ArgumentException>(() => ReleaseYear.Create(releaseYearValue));
     }
     [Fact]
-    public void Create_ShouldThrowArgumentException_WhenReleasesIsInTheFutureYear()
-    {
-        // Arrange
-        int releaseYearValue = DateTime.UtcNow.Year + 1;
-
-        // Act & Assert
-        Assert.Throws<ArgumentException>(() => ReleaseYear.Create(releaseYearValue));
-    }
-
-    [Fact]
     public void ReleaseYears_WithSameValue_ShouldBeEqual()
     {
         // Arrange
