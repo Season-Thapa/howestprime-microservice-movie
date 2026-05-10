@@ -12,8 +12,8 @@ public static class SearchMovieCatalogController
     public static async Task<IResult> Invoke(
         [FromServices] IUseCase<SearchMovieCatalogInput, IReadOnlyList<MovieData>> useCase,
         [FromHeader(Name = "x-user-role")] string? userRole,
-        [FromQuery] string? title,
-        [FromQuery] string? genres)
+        [FromQuery] string title,
+        [FromQuery] string genres)
     {
         if (string.IsNullOrWhiteSpace(userRole) || !userRole.Equals("Manager", StringComparison.OrdinalIgnoreCase))
             return TypedResults.Unauthorized();
@@ -27,7 +27,7 @@ public static class SearchMovieCatalogController
                 .ToList();
         }
 
-        var input = new SearchMovieCatalogInput(title ?? string.Empty, genreDataList);
+        var input = new SearchMovieCatalogInput(title, genreDataList);
 
         IReadOnlyList<MovieData> movies;
         try

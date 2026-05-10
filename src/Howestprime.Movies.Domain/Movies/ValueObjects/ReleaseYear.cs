@@ -5,9 +5,7 @@ public sealed record ReleaseYear(int Value) : ValueObject
 {
     public static ReleaseYear Create(int value)
     {
-        Asserts.EnsureNotNegative(value);
-        if (value > DateTime.UtcNow.Year)
-            throw new ArgumentException("Value cannot be in the future.");
+        Asserts.EnsureGreaterThan(value, 1800);
         return new ReleaseYear(value);
     }
 }
