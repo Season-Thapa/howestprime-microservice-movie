@@ -27,14 +27,14 @@ public sealed class RegisterMovieIntegrationTest(
             var movie = await _client.GetMovieAsync(movieId);
             // Assert 
             Assert.NotNull(movie);
-            Assert.Equal(title, movie.Title);
+            Assert.Equal(title.Value, movie.Title.Value);
             Assert.Equal(description, movie.Description);
-            Assert.Equal(ageRating, movie.AgeRating);
-            Assert.Equal(releaseYear, movie.ReleaseYear);
-            Assert.Equal(duration, movie.Duration);
-            Assert.Equal(posterUrl, movie.PosterUrl);
-            Assert.Equal(actors, movie.Actors);
-            Assert.Equal(genres, movie.Genres);
+            Assert.Equal(ageRating.Value, movie.AgeRating.Value);
+            Assert.Equal(releaseYear.Value, movie.ReleaseYear.Value);
+            Assert.Equal(duration.Value, movie.Duration.Value);
+            Assert.Equal(posterUrl.Value, movie.PosterUrl.Value);
+            Assert.Equal(actors.Select(a => a.Value).ToList(), movie.Actors.Select(a => a.Value).ToList());
+            Assert.Equal(genres.Select(g => g.Value).ToList(), movie.Genres.Select(g => g.Value).ToList());
             Assert.Equal(movieId, movie.Id);
         }
 

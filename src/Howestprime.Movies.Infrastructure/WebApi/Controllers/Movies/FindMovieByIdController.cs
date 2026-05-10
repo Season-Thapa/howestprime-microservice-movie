@@ -48,5 +48,5 @@ public static class FindMovieByIdController
 
         return TypedResults.Ok(collection);
     }
-    
+
 }
