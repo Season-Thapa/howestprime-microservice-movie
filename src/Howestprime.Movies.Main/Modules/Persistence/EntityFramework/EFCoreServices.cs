@@ -9,6 +9,7 @@ using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Repositories
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Seeders;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Queries;
 using Howestprime.Movies.Domain.MovieEvents;
+using Howestprime.Movies.Domain.Rooms;
 
 namespace Howestprime.Movies.Main.Modules.Persistence.EntityFramework;
 
@@ -49,6 +50,8 @@ public static class EFCoreServices
                     sp.GetRequiredService<IMovieRepository>());
                 uow.RegisterRepository(
                     sp.GetRequiredService<IMovieEventRepository>());
+                uow.RegisterRepository(
+                    sp.GetRequiredService<IRoomRepository>());
 
                 return uow;
             });
@@ -67,6 +70,7 @@ public static class EFCoreServices
     {
         services.AddScoped<IMovieRepository, MovieRepository>();
         services.AddScoped<IMovieEventRepository, MovieEventRepository>();
+        services.AddScoped<IRoomRepository, RoomRepository>();
         return services;
     }
 
