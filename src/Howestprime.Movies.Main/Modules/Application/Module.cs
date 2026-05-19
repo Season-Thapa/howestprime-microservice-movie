@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Application.Movies;
 using Howestprime.Movies.Application.Contracts.Data;
+using Howestprime.Movies.Application.MovieEvents;
 
 namespace Howestprime.Movies.Main.Modules.Application;
 
@@ -14,7 +15,8 @@ public static class ApplicationModule
     )
     {
         // Register command use cases
-        services.AddScoped<IUseCase<RegisterMovieInput, Guid>, RegisterMovie>();     
+        services.AddScoped<IUseCase<RegisterMovieInput, Guid>, RegisterMovie>();
+        services.AddScoped<IUseCase<ScheduleMovieEventInput, Guid>, ScheduleMovieEvent>();
         // Register query use cases
         services.AddScoped<IUseCase<SearchMovieCatalogInput, IReadOnlyList<MovieData>>, SearchMovieCatalog>();
         services.AddScoped<IUseCase<FindMovieByIdInput, IReadOnlyList<MovieData>>, FindMovieById>();
