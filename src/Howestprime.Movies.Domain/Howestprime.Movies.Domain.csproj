@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Howestprime.Movies.Shared\Howestprime.Movies.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MovieEvents\Events\" />
+  </ItemGroup>
+
 </Project>

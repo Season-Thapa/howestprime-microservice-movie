@@ -1,9 +1,10 @@
-using Howestprime.Movies.Domain.MovieEvent;
 using Microsoft.Extensions.Logging;
 using Howestprime.Movies.Domain.Movies;
 using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Howestprime.Movies.Domain.Shared;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration;
+using Howestprime.Movies.Domain.Rooms;
+using Howestprime.Movies.Domain.MovieEvents;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Seeders;
 

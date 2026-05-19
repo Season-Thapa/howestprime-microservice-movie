@@ -1,7 +1,8 @@
 ﻿using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Rooms;
 using Howestprime.Movies.Domain.Shared;
 
-namespace Howestprime.Movies.Domain.MovieEvent;
+namespace Howestprime.Movies.Domain.MovieEvents;
 public readonly record struct MovieEventId(Guid Value) : IEntityId;
 public sealed class MovieEvent : AggregateRoot<MovieEventId>
 {

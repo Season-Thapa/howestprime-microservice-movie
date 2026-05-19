@@ -69,6 +69,8 @@ public sealed class Movie : AggregateRoot<MovieId>
             movie.ReleaseYear,
             movie.AgeRating,
             movie.Duration,
+            movie.Genres.ToList(),
+            movie.Actors.ToList(),
             movie.PosterUrl
             ));
         return movie;

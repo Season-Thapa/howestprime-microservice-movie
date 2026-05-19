@@ -1,6 +1,6 @@
 ﻿using Howestprime.Movies.Domain.Shared;
 
-namespace Howestprime.Movies.Domain.MovieEvent;
+namespace Howestprime.Movies.Domain.Rooms;
 public readonly record struct RoomId(Guid Value) : IEntityId;
 
 public sealed class Room : AggregateRoot<RoomId>

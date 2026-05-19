@@ -1,4 +1,4 @@
-﻿using Howestprime.Movies.Domain.MovieEvent;
+﻿using Howestprime.Movies.Domain.MovieEvents;
 using Howestprime.Movies.Domain.Movies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -1,5 +1,5 @@
-﻿using Howestprime.Movies.Domain.MovieEvent;
-using Howestprime.Movies.Domain.Movies;
+﻿using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Rooms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

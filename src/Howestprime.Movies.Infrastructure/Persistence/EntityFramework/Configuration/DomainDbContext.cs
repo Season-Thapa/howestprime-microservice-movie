@@ -1,9 +1,10 @@
-using Howestprime.Movies.Domain.MovieEvent;
 using Howestprime.Movies.Domain.Movies;
 using Microsoft.EntityFrameworkCore;
 using Howestprime.Movies.Domain.Shared.DomainEvents;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Converters;
 using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Domain;
+using Howestprime.Movies.Domain.Rooms;
+using Howestprime.Movies.Domain.MovieEvents;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration;
 
