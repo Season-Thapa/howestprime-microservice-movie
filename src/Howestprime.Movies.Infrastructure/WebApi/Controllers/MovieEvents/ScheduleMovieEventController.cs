@@ -23,12 +23,22 @@ namespace Howestprime.Movies.Infrastructure.WebApi.Controllers.MovieEvents
 
     public static class ScheduleMovieEventController
     {
-       
+        public static async Task<Results<Created, BadRequest>> Invoke(
+        [AsParameters] ScheduleMovieEventRequest request)
+        {
+            ScheduleMovieEventInput input = new ScheduleMovieEventInput(
+                request.Body.MovieId,
+                request.Body.RoomId,
+                request.Body.ShowTime
+                );
+      
+            Guid movieEventId = await request.UseCase.Execute(input);
+            return TypedResults.Created($"/api/movie-events/{movieEventId}");
+        }
     }
     public record ScheduleMovieEventBody(
     [Required] Guid MovieId,
     [Required] Guid RoomId,
-    [Required] DateTime ShowTime,
-    [Required] int Capacity
+    [Required] DateTime ShowTime
 );
 }
