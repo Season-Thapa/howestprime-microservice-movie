@@ -79,6 +79,7 @@ public static class EFCoreServices
     )
     {
         services.AddScoped<ISearchMovieCatalogQuery, SearchMovieCatalogQuery>();
+        services.AddScoped<IMovieEventQuery, MovieEventQuery>();
         return services;
     }
     
