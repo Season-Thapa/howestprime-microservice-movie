@@ -1,6 +1,7 @@
 ﻿using Howestprime.Movies.Domain.MovieEvents;
 using Howestprime.Movies.Domain.Movies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration.Domain;
@@ -15,6 +16,26 @@ public class MovieEventConfiguration : IEntityTypeConfiguration<MovieEvent>
         builder.Property(movieEvent => movieEvent.RoomId ).IsRequired();
         builder.Property(movieEvent => movieEvent.ShowTime ).IsRequired();
         builder.Property(movieEvent => movieEvent.Capacity ).IsRequired();
+        builder.OwnsMany(movieEvent => movieEvent.Bookings, ownedBuilder =>
+        {
+            ownedBuilder.ToTable("Bookings");
+            ownedBuilder.WithOwner().HasForeignKey();
+            ownedBuilder.HasKey(b => b.Id);
+            ownedBuilder.Property(b => b.StandardVisitors).IsRequired();
+            ownedBuilder.Property(b => b.DiscountVisitors).IsRequired();
+            ownedBuilder.Property(b => b.PaymentStatus).IsRequired();
+            ownedBuilder.Property(b => b.BookingStatus).IsRequired();
+            ownedBuilder.Property(b => b.SeatNumbers)
+                .HasConversion(
+                    seatNumbers => string.Join(',', seatNumbers),
+                    value => value.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList())
+                .Metadata.SetValueComparer(
+                    new ValueComparer<IReadOnlyList<string>>(
+                        (c1, c2) => c1!.SequenceEqual(c2!),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => c.ToList()));
+
+        });
     }
 
  
