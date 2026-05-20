@@ -7,6 +7,8 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configur
 public abstract class QueryDbContext : DbContext
 {
     public DbSet<MovieData> Movies { get; set; }
+    public DbSet<MovieEventData> MovieEvents { get; set; }
+    public DbSet<RoomData> Rooms { get; set; }
     protected QueryDbContext()
     {
         ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
