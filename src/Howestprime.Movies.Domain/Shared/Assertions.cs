@@ -50,4 +50,16 @@ public static class Asserts
         if (time <= DateTime.Now)
             throw new ArgumentException($"Movie event {time} must be in the future.");
     }
+    public static void EnsureEnumDefined<T>(
+        T value,
+        [CallerArgumentExpression(nameof(value))] string? paramName = "")
+        where T : struct, Enum
+    {
+        if (!Enum.IsDefined(value))
+        {
+            throw new ArgumentException(
+                $"Invalid enum value for {typeof(T).Name}.",
+                paramName);
+        }
+    }
 }
