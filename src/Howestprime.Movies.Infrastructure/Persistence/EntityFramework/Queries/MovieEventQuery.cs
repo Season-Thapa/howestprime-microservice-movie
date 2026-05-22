@@ -40,7 +40,7 @@ public sealed class MovieEventQuery : IMovieEventQuery
                     Capacity =  me.Room.Capacity,
                     
                 },
-                ShowTime = me.ShowTime,
+                Showtime = DateTime.SpecifyKind(me.Showtime, DateTimeKind.Utc),
                 Capacity = me.Capacity
             })
             .ToListAsync();

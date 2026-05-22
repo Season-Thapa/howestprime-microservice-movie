@@ -31,7 +31,7 @@ public static class GetHowestprimeScheduleController
             Id = me.Id,
             Room = me.Room,
             Movie = me.Movie,
-            ShowTime = me.ShowTime,
+            Showtime = me.Showtime,
             Capacity = me.Capacity,
 
         }).ToList();

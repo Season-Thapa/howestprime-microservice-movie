@@ -18,8 +18,13 @@ namespace UnitTests.Application.Mocks
         public Task<MovieEvent> ByShowtimeAndRoomID(DateTime showtime, RoomId roomId)
         {
             return Task.FromResult(
-                _movieEvents.FirstOrDefault(m => m.ShowTime.Equals(showtime) && m.RoomId.Equals(roomId))
+                _movieEvents.FirstOrDefault(m => m.Showtime.Equals(showtime) && m.RoomId.Equals(roomId))
             );
+        }
+
+        public Task<MovieEvent?> GetById(MovieEventId id)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<bool> Exists(MovieEventId id)

@@ -10,7 +10,7 @@ namespace Howestprime.Movies.Application.MovieEvents;
 public sealed record ScheduleMovieEventInput(
     Guid MovieId,
     Guid RoomId,
-    DateTime ShowTime
+    DateTime Showtime
 );
 public class ScheduleMovieEvent(
     IUnitOfWork unitOfWork
@@ -20,7 +20,7 @@ public class ScheduleMovieEvent(
     {
         MovieId movieId = new MovieId(input.MovieId);
         RoomId roomId = new RoomId(input.RoomId);
-        MovieEvent? existedMovieEvent= (await unitOfWork.Repo<IMovieEventRepository>().ByShowtimeAndRoomID(input.ShowTime, roomId));
+        MovieEvent? existedMovieEvent= (await unitOfWork.Repo<IMovieEventRepository>().ByShowtimeAndRoomID(input.Showtime, roomId));
         Optional<Movie> movieOptional = await unitOfWork.Repo<IMovieRepository>().ById(movieId);
         Optional<Room> roomOptional = await unitOfWork.Repo<IRoomRepository>().ById(roomId);
 
@@ -30,11 +30,12 @@ public class ScheduleMovieEvent(
             throw new NotFoundException($"Room with ID {input.RoomId} does not exist.");
         if (existedMovieEvent != null)
         {
-            throw new InvalidOperationException($"There is already a movie event scheduled at {input.ShowTime} in room {roomId.Value}");
+            throw new InvalidOperationException($"There is already a movie event scheduled at {input.Showtime} in room {roomId.Value}");
         }
-        
+        var movie = movieOptional.Value;
+        var room  = roomOptional.Value;
 
-        MovieEvent movieEvent = MovieEvent.Schedule(movieId, roomId, input.ShowTime, roomOptional.Value.Capacity);
+        MovieEvent movieEvent = MovieEvent.Schedule(movie, room, input.Showtime, room.Capacity);
         
         await unitOfWork.Save<IMovieEventRepository>(movieEvent);
         await unitOfWork.Do();

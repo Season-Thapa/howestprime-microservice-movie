@@ -1,5 +1,6 @@
 ﻿using Howestprime.Movies.Domain.MovieEvents;
 using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Rooms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,9 +13,18 @@ public class MovieEventConfiguration : IEntityTypeConfiguration<MovieEvent>
     {
         builder.ToTable("MovieEvents");
         builder.HasKey(m => m.Id);
-        builder.Property(movieEvent => movieEvent.MovieId ).IsRequired();
-        builder.Property(movieEvent => movieEvent.RoomId ).IsRequired();
-        builder.Property(movieEvent => movieEvent.ShowTime ).IsRequired();
+        builder.HasOne(me => me.Movie)
+            .WithMany()
+            .HasForeignKey("MovieId")    
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(me => me.Room)
+            .WithMany()
+            .HasForeignKey("RoomId")
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(movieEvent => movieEvent.Showtime )
+            .IsRequired();
         builder.Property(movieEvent => movieEvent.Capacity ).IsRequired();
         builder.OwnsMany(movieEvent => movieEvent.Bookings, ownedBuilder =>
         {

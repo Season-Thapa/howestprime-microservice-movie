@@ -137,8 +137,8 @@ public sealed class ScheduleMovieEventTests
         DateTime showTime = DateTime.Today.AddDays(1).AddHours(15).AddMinutes(00);
 
         MovieEvent existingMovieEvent = MovieEvent.Schedule(
-            movie.Id,
-            room.Id,
+            movie,
+            room,
             showTime,
             room.Capacity
         );

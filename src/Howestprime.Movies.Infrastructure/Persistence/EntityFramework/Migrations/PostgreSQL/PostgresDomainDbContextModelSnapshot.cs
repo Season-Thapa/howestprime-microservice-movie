@@ -36,13 +36,17 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
                     b.Property<Guid>("RoomId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("ShowTime")
+                    b.Property<DateTime>("Showtime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("Visitor")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("MovieEvents", (string)null);
                 });
@@ -97,6 +101,18 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
 
             modelBuilder.Entity("Howestprime.Movies.Domain.MovieEvents.MovieEvent", b =>
                 {
+                    b.HasOne("Howestprime.Movies.Domain.Movies.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Howestprime.Movies.Domain.Rooms.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsMany("Howestprime.Movies.Domain.MovieEvents.Entities.Booking", "Bookings", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -132,6 +148,10 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
                         });
 
                     b.Navigation("Bookings");
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Howestprime.Movies.Domain.Movies.Movie", b =>

@@ -78,15 +78,15 @@ public class DomainDbSeeder(DomainDbContext context, ILogger<DomainDbSeeder> log
                 var movieEventsToSeed = new List<MovieEvent>
                 {
                     MovieEvent.Schedule(
-                        movies[0].Id, 
-                        rooms[0].Id,
+                        movies[0],
+                        rooms[0],
                         // MUST use UtcNow.Date to assure DateTimeKind.Utc, required by Npgsql (PostgreSQL)
                         DateTime.UtcNow.Date.AddDays(1).AddHours(19),
                         rooms[0].Capacity
                     ),
                     MovieEvent.Schedule(
-                        movies[1].Id,  
-                        rooms[1].Id,
+                        movies[1],
+                        rooms[1],
                         DateTime.UtcNow.Date.AddDays(1).AddHours(19),
                         rooms[1].Capacity
                     )

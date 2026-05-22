@@ -14,9 +14,9 @@ public static class GetMovieEventByMonthController
         [FromQuery] int month
     )
     {
-        DateTime from = new(year, month, 1);
+        var from = new DateTime(year, month, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        DateTime to = from.AddMonths(1).AddTicks(-1);
+        var to = from.AddMonths(1).AddTicks(-1);
 
         var input = new SearchMovieEventsInTimeRangeInput(from, to);
 
@@ -34,7 +34,7 @@ public static class GetMovieEventByMonthController
             Id = me.Id,
             Room = me.Room,
             Movie = me.Movie,
-            ShowTime = me.ShowTime,
+            Showtime = me.Showtime,
             Capacity = me.Capacity,
 
         }).ToList();

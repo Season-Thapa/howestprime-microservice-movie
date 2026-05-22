@@ -16,7 +16,7 @@ public class SearchMovieEventsInTimeRangeTests
 		MovieEventData inRange = new()
 		{
 			Id = Guid.NewGuid(),
-			ShowTime = now.AddDays(7),
+			Showtime = now.AddDays(7),
 			Capacity = 100,
 			Movie = new MovieData
 			{
@@ -36,7 +36,7 @@ public class SearchMovieEventsInTimeRangeTests
 		MovieEventData outOfRange = new()
 		{
 			Id = Guid.NewGuid(),
-			ShowTime = now.AddDays(15),
+			Showtime = now.AddDays(15),
 			Capacity = 80,
 			Movie = new MovieData
 			{
@@ -73,7 +73,7 @@ public class SearchMovieEventsInTimeRangeTests
 		MovieEventData outOfRange = new()
 		{
 			Id = Guid.NewGuid(),
-			ShowTime = now.AddDays(20),
+			Showtime = now.AddDays(20),
 			Capacity = 80,
 			Movie = new MovieData
 			{

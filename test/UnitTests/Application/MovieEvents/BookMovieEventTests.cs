@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Howestprime.Movies.Domain.Movies;
+using Howestprime.Movies.Domain.Movies.ValueObjects;
 using Howestprime.Movies.Domain.Rooms;
 using UnitTests.Application.Mocks;
 using Xunit;
@@ -24,8 +25,12 @@ public sealed class BookMovieEventTests
         var fakeRepo = new FakeMovieEventRepository();
         fakeUow.SetRepository<IMovieEventRepository>(fakeRepo);
         var logger = new Mock<ILogger<BookMovieEvent>>();
+        FakeMovieRepository movieRepository = new();
+        FakeRoomRepository roomRepository = new();
 
-        var movieEvent = MovieEvent.Schedule(new MovieId(Guid.NewGuid()), new RoomId(Guid.NewGuid()), DateTime.Today.AddDays(1).AddHours(15), 10);
+        Movie movie = CreateValidMovie();
+        Room room = CreateValidRoom();
+        var movieEvent = MovieEvent.Schedule(movie, room, DateTime.Today.AddDays(1).AddHours(15), 10);
         await fakeRepo.Save(movieEvent);
 
         var useCase = new BookMovieEvent(fakeUow, logger.Object);
@@ -56,8 +61,12 @@ public sealed class BookMovieEventTests
         var fakeRepo = new FakeMovieEventRepository();
         fakeUow.SetRepository<IMovieEventRepository>(fakeRepo);
         var logger = new Mock<ILogger<BookMovieEvent>>();
-        var movieId = new MovieId(Guid.NewGuid());
-        var movieEvent = MovieEvent.Schedule(movieId, new RoomId(Guid.NewGuid()), DateTime.Today.AddDays(1).AddHours(15), 10);
+        FakeMovieRepository movieRepository = new();
+        FakeRoomRepository roomRepository = new();
+
+        Movie movie = CreateValidMovie();
+        Room room = CreateValidRoom();
+        var movieEvent = MovieEvent.Schedule(movie, room, DateTime.Today.AddDays(1).AddHours(15), 10);
         await fakeRepo.Save(movieEvent);
         var useCase = new BookMovieEvent(fakeUow, logger.Object);
         var input = new BookMovieEventInput(movieEvent.Id.Value, standard, discount);
@@ -74,12 +83,67 @@ public sealed class BookMovieEventTests
         var fakeRepo = new FakeMovieEventRepository();
         fakeUow.SetRepository<IMovieEventRepository>(fakeRepo);
         var logger = new Mock<ILogger<BookMovieEvent>>();
-        var movieEvent = MovieEvent.Schedule(new MovieId(Guid.NewGuid()), new RoomId(Guid.NewGuid()), DateTime.Today.AddDays(1).AddHours(15), 3);
+        FakeMovieRepository movieRepository = new();
+        FakeRoomRepository roomRepository = new();
+
+        Movie movie = CreateValidMovie();
+        Room room = CreateValidRoom();
+        var movieEvent = MovieEvent.Schedule(movie, room, DateTime.Today.AddDays(1).AddHours(15), 3);
         await fakeRepo.Save(movieEvent);
         var useCase = new BookMovieEvent(fakeUow, logger.Object);
         var input = new BookMovieEventInput(movieEvent.Id.Value, 2, 2);
 
         // Act & Assert
         await Assert.ThrowsAsync<InvalidOperationException>(() => useCase.Execute(input));
+    }
+    private static Room CreateValidRoom()
+    {
+        return Room.Create(
+            "Room 1",
+            100
+        );
+    }
+
+    private static Movie CreateValidMovie()
+    {
+        MovieTitle title = MovieTitle.Create("Inception");
+
+        string description =
+            "A mind-bending thriller about dreams within dreams.";
+
+        ReleaseYear releaseYear = ReleaseYear.Create(2010);
+
+        AgeRating ageRating = AgeRating.Create(13);
+
+        Duration duration = Duration.Create(148);
+
+        PosterUrl posterUrl = PosterUrl.Create(
+            "https://example.com/inception-poster.jpg"
+        );
+
+        List<Genre> genres =
+        [
+            Genre.Create("Action"),
+            Genre.Create("Sci-Fi"),
+            Genre.Create("Thriller")
+        ];
+
+        List<Actor> actors =
+        [
+            Actor.Create("Leonardo DiCaprio"),
+            Actor.Create("Joseph Gordon-Levitt"),
+            Actor.Create("Elliot Page")
+        ];
+
+        return Movie.Register(
+            title,
+            description,
+            releaseYear,
+            ageRating,
+            duration,
+            genres,
+            actors,
+            posterUrl
+        );
     }
 }
