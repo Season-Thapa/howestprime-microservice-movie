@@ -30,7 +30,7 @@ public static class BookMovieEventController
 
         BookingId bookingId = await request.UseCase.Execute(input);
 
-        return TypedResults.Created($"/movie-events/{request.MovieEventId}/bookings/{bookingId}");
+        return TypedResults.Created($"/movie-events/{request.MovieEventId}/bookings/{bookingId.Value}");
     }
     
 }

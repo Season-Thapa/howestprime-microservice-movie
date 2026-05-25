@@ -32,10 +32,9 @@ public class ScheduleMovieEvent(
         {
             throw new InvalidOperationException($"There is already a movie event scheduled at {input.Showtime} in room {roomId.Value}");
         }
-        var movie = movieOptional.Value;
-        var room  = roomOptional.Value;
+      var room = roomOptional.Value;
 
-        MovieEvent movieEvent = MovieEvent.Schedule(movie, room, input.Showtime, room.Capacity);
+        MovieEvent movieEvent = MovieEvent.Schedule(movieId, roomId, input.Showtime, room.Capacity);
         
         await unitOfWork.Save<IMovieEventRepository>(movieEvent);
         await unitOfWork.Do();

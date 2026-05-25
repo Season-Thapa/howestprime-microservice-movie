@@ -44,10 +44,6 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieId");
-
-                    b.HasIndex("RoomId");
-
                     b.ToTable("MovieEvents", (string)null);
                 });
 
@@ -101,18 +97,6 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
 
             modelBuilder.Entity("Howestprime.Movies.Domain.MovieEvents.MovieEvent", b =>
                 {
-                    b.HasOne("Howestprime.Movies.Domain.Movies.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Howestprime.Movies.Domain.Rooms.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.OwnsMany("Howestprime.Movies.Domain.MovieEvents.Entities.Booking", "Bookings", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -148,10 +132,6 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
                         });
 
                     b.Navigation("Bookings");
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Howestprime.Movies.Domain.Movies.Movie", b =>
@@ -168,7 +148,7 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
 
                             b1.HasKey("MovieId", "__synthesizedOrdinal");
 
-                            b1.ToTable("Movies");
+                            b1.ToTable("Movies", (string)null);
 
                             b1.ToJson("Actors");
 
@@ -188,7 +168,7 @@ namespace Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Migratio
 
                             b1.HasKey("MovieId", "__synthesizedOrdinal");
 
-                            b1.ToTable("Movies");
+                            b1.ToTable("Movies", (string)null);
 
                             b1.ToJson("Genres");
 

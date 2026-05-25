@@ -9,9 +9,7 @@ public readonly record struct MovieEventId(Guid Value) : IEntityId;
 public sealed class MovieEvent : AggregateRoot<MovieEventId>
 {
     public MovieId MovieId { get; private set; }
-    public Movie Movie { get; private set; }
     public RoomId RoomId { get; private set; }
-    public Room Room { get; private set; }
     public DateTime Showtime { get; private set; }
     public int Capacity { get; private set; }
     public IReadOnlyList<Booking> Bookings => _bookings.AsReadOnly();
@@ -19,24 +17,22 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
     public int Visitor {get; private set;}
 
     private MovieEvent() { }
-    public static MovieEvent Schedule(Movie movie, Room room, DateTime showTime, int capacity, MovieEventId? id = null)
+    public static MovieEvent Schedule(MovieId movieId, RoomId roomId, DateTime showTime, int capacity, MovieEventId? id = null)
     {
         MovieEvent movieEvent = new (
             id ?? EntityId.New<MovieEventId>(),
-            movie,
-            room,
+            movieId,
+            roomId,
             showTime,
             capacity
         );
         movieEvent.ValidateState();
         return movieEvent;
     }
-    private MovieEvent(MovieEventId id, Movie movie, Room room,DateTime showtime, int capacity) : base(id)
+    private MovieEvent(MovieEventId id, MovieId movieId, RoomId roomId,DateTime showtime, int capacity) : base(id)
     {
-        Movie= movie;
-        Room= room;
-        MovieId = movie.Id;
-        RoomId = room.Id;
+        MovieId = movieId;
+        RoomId = roomId;
         Showtime = showtime;
         Capacity = capacity;
     }
@@ -44,29 +40,33 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
     public Booking Book(
         int standardVisitors,
         int discountVisitors,
-        List<string> seatNumbers)
+        string roomName
+        )
     {
-        
+        int totalVisitors = standardVisitors + discountVisitors;
+
+        List<string> seatNumbers = Enumerable
+            .Range(1, totalVisitors)
+            .Select(i => i.ToString())
+            .ToList();
         Booking booking = Booking.Create(
             standardVisitors,
             discountVisitors,
             seatNumbers
         );
-        if (Room == null)
-            throw new InvalidOperationException("Room navigation property is not loaded.");
-        if (Movie == null)
-            throw new InvalidOperationException("Movie navigation property is not loaded.");
+     
         
         _bookings.Add(booking);
         RaiseDomainEvent(new BookingOpened(
-            booking.Id, 
+            booking.Id.Value.ToString(), 
             BookingStatus.Open, 
             PaymentStatus.Pending, 
             booking.StandardVisitors, 
             booking.DiscountVisitors,
-            MovieId,
-            Room.Name,
-            booking.SeatNumbers.ToList()));
+            MovieId.Value.ToString(),
+            roomName,
+            Showtime.ToString("O"),
+            seatNumbers));
         return booking;
     }
     public override void ValidateState()
@@ -74,8 +74,7 @@ public sealed class MovieEvent : AggregateRoot<MovieEventId>
          Asserts.EnsureShowtimeIsAt15hOr19h(Showtime);
          Asserts.EnsureShowtimeIsInTheFuture(Showtime);
          Asserts.EnsureGreaterThan(Capacity, 0);
-         Asserts.EnsureNotEmpty(Movie);
-         Asserts.EnsureNotEmpty(Room);
+
     }
    
 }

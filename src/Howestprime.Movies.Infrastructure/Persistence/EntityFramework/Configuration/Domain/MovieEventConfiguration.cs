@@ -13,16 +13,8 @@ public class MovieEventConfiguration : IEntityTypeConfiguration<MovieEvent>
     {
         builder.ToTable("MovieEvents");
         builder.HasKey(m => m.Id);
-        builder.HasOne(me => me.Movie)
-            .WithMany()
-            .HasForeignKey("MovieId")    
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(me => me.Room)
-            .WithMany()
-            .HasForeignKey("RoomId")
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(movieEvent => movieEvent.MovieId ).IsRequired();
+        builder.Property(movieEvent => movieEvent.RoomId ).IsRequired();
         builder.Property(movieEvent => movieEvent.Showtime )
             .IsRequired();
         builder.Property(movieEvent => movieEvent.Capacity ).IsRequired();

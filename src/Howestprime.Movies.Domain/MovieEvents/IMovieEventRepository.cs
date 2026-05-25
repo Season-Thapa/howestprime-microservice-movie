@@ -8,6 +8,5 @@ namespace Howestprime.Movies.Domain.MovieEvents;
 public interface IMovieEventRepository : IRepository<MovieEvent, MovieEventId>
 {
     Task<MovieEvent> ByShowtimeAndRoomID (DateTime showtime, RoomId roomId);
-    Task<MovieEvent> GetById(MovieEventId id);
 
 }

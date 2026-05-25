@@ -14,21 +14,11 @@ public sealed class MovieEventRepository(
     public Task<MovieEvent> ByShowtimeAndRoomID(DateTime showtime, RoomId roomId)
     {
         MovieEvent? movieEvent = _context.MovieEvents
-            .Include(me => me.Movie)
-            .Include(me => me.Room)
             .FirstOrDefault(m => m.Showtime == showtime && m.RoomId == roomId);
 
         return Task.FromResult(movieEvent);
     }
 
-    public Task<MovieEvent> GetById(MovieEventId id)
-    {
-        MovieEvent? movieEvent =  _context.MovieEvents
-            .Include(me => me.Movie)
-            .Include(me => me.Room)
-            .FirstOrDefault(me => me.Id == id);
-        
-        return Task.FromResult(movieEvent);
-    }
+
  
 }

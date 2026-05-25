@@ -1,6 +1,8 @@
-﻿using Howestprime.Movies.Application.Contracts.Ports;
+﻿using Aornis;
+using Howestprime.Movies.Application.Contracts.Ports;
 using Howestprime.Movies.Domain.MovieEvents;
 using Howestprime.Movies.Domain.MovieEvents.Entities;
+using Howestprime.Movies.Domain.Rooms;
 using Howestprime.Movies.Shared.Exceptions;
 using Microsoft.Extensions.Logging;
 
@@ -19,6 +21,8 @@ public sealed class BookMovieEvent(
         MovieEventId movieEventId = new(input.MovieEventId);
          MovieEvent? movieEvent = (await unitOfWork.Repo<IMovieEventRepository>().ById(movieEventId))
              .OrElseThrow(() => new NotFoundException($"MovieEvent with ID {movieEventId} does not exist."));
+         Optional<Room> roomOptional = await unitOfWork.Repo<IRoomRepository>().ById(movieEvent.RoomId);
+
          int totalVisitors = input.StandardVisitors + input.DiscountVisitors;
          if (totalVisitors >= movieEvent.Capacity)
          {
@@ -31,8 +35,8 @@ public sealed class BookMovieEvent(
          Booking booking = movieEvent.Book(
             input.StandardVisitors,
             input.DiscountVisitors,
-            new List<string>() 
-        );
+            roomOptional.Value.Name
+            );
          await unitOfWork.Save<IMovieEventRepository>(movieEvent);
          await unitOfWork.Do();
          logger.LogInformation("Booked movie event with ID {MovieEventId} and created booking with ID {BookingId}", input.MovieEventId, booking.Id.Value);
