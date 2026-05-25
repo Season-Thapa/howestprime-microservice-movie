@@ -23,14 +23,17 @@ public sealed class BookMovieEventTests
         // Arrange
         var fakeUow = new FakeUnitOfWork();
         var fakeRepo = new FakeMovieEventRepository();
+        var fakeRoomRepo = new FakeRoomRepository();
         fakeUow.SetRepository<IMovieEventRepository>(fakeRepo);
+        fakeUow.SetRepository<IRoomRepository>(fakeRoomRepo);
         var logger = new Mock<ILogger<BookMovieEvent>>();
         FakeMovieRepository movieRepository = new();
         FakeRoomRepository roomRepository = new();
 
         Movie movie = CreateValidMovie();
         Room room = CreateValidRoom();
-        var movieEvent = MovieEvent.Schedule(movie, room, DateTime.Today.AddDays(1).AddHours(15), 10);
+        await fakeRoomRepo.Save(room);
+        var movieEvent = MovieEvent.Schedule(movie.Id, room.Id, DateTime.Today.AddDays(1).AddHours(15), 10);
         await fakeRepo.Save(movieEvent);
 
         var useCase = new BookMovieEvent(fakeUow, logger.Object);
@@ -59,14 +62,17 @@ public sealed class BookMovieEventTests
         // Arrange
         var fakeUow = new FakeUnitOfWork();
         var fakeRepo = new FakeMovieEventRepository();
+        var fakeRoomRepo = new FakeRoomRepository();
         fakeUow.SetRepository<IMovieEventRepository>(fakeRepo);
+        fakeUow.SetRepository<IRoomRepository>(fakeRoomRepo);
         var logger = new Mock<ILogger<BookMovieEvent>>();
         FakeMovieRepository movieRepository = new();
         FakeRoomRepository roomRepository = new();
 
         Movie movie = CreateValidMovie();
         Room room = CreateValidRoom();
-        var movieEvent = MovieEvent.Schedule(movie, room, DateTime.Today.AddDays(1).AddHours(15), 10);
+        await fakeRoomRepo.Save(room);
+        var movieEvent = MovieEvent.Schedule(movie.Id, room.Id, DateTime.Today.AddDays(1).AddHours(15), 10);
         await fakeRepo.Save(movieEvent);
         var useCase = new BookMovieEvent(fakeUow, logger.Object);
         var input = new BookMovieEventInput(movieEvent.Id.Value, standard, discount);
@@ -81,14 +87,17 @@ public sealed class BookMovieEventTests
         // Arrange
         var fakeUow = new FakeUnitOfWork();
         var fakeRepo = new FakeMovieEventRepository();
+        var fakeRoomRepo = new FakeRoomRepository();
         fakeUow.SetRepository<IMovieEventRepository>(fakeRepo);
+        fakeUow.SetRepository<IRoomRepository>(fakeRoomRepo);
         var logger = new Mock<ILogger<BookMovieEvent>>();
         FakeMovieRepository movieRepository = new();
         FakeRoomRepository roomRepository = new();
 
         Movie movie = CreateValidMovie();
         Room room = CreateValidRoom();
-        var movieEvent = MovieEvent.Schedule(movie, room, DateTime.Today.AddDays(1).AddHours(15), 3);
+        await fakeRoomRepo.Save(room);
+        var movieEvent = MovieEvent.Schedule(movie.Id, room.Id, DateTime.Today.AddDays(1).AddHours(15), 3);
         await fakeRepo.Save(movieEvent);
         var useCase = new BookMovieEvent(fakeUow, logger.Object);
         var input = new BookMovieEventInput(movieEvent.Id.Value, 2, 2);
