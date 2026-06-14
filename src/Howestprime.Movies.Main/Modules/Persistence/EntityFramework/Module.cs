@@ -1,4 +1,8 @@
 
+using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Configuration;
+using Howestprime.Movies.Infrastructure.Persistence.EntityFramework.Seeders;
+using Microsoft.EntityFrameworkCore;
+
 namespace Howestprime.Movies.Main.Modules.Persistence.EntityFramework;
 
 public static class PersistenceModule
@@ -18,6 +22,6 @@ public static class PersistenceModule
         if (!app.Environment.IsProduction())
             await app.SeedData();
 
-        return app; 
+        return app;
     }
 }
