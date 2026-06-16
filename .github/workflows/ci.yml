@@ -119,13 +119,8 @@ jobs:
                   "MessageBroker__Hostname=${{ vars.HOWESTPRIME_WIDE_P_MESSAGEBROKER_HOSTNAME }}" \
                   "MessageBroker__VirtualHost=${{ vars.HOWESTPRIME_WIDE_P_MESSAGEBROKER_VHOST }}" \
                   "MessageBroker__Password=secretref:mb-password" \
-                  "MessageBroker__Username=${{ vars.HOWESTPRIME_WIDE_P_MESSAGEBROKER_LOGIN }}"
-            
-              az containerapp ingress enable \
-                --name microservice-movies \
-                --resource-group ${{ vars.AZ_RESOURCE_GROUP }} \
-                --type external \
-                --target-port 8000
+                  "MessageBroker__Username=${{ vars.HOWESTPRIME_WIDE_P_MESSAGEBROKER_LOGIN }}"          
+         
             
             else
               echo "Updating existing container app..."
@@ -134,3 +129,10 @@ jobs:
                 --resource-group ${{ vars.AZ_RESOURCE_GROUP }} \
                 --image ${{ vars.AZ_CONTAINER_REGISTRY }}/microservice-movies:1.0.0
             fi
+             echo "Ensuring ingress is enabled..."
+
+              az containerapp ingress enable \
+                --name microservice-movies \
+                --resource-group ${{ vars.AZ_RESOURCE_GROUP }} \
+                --type external \
+                --target-port 8000
