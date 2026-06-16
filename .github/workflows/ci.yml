@@ -70,12 +70,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Publish .NET app
-        run: dotnet publish src/Howestprime.Movies.Main/Howestprime.Movies.Main.csproj \
-            --configuration Release \
-            --os linux --arch x64 \
-            -t:PublishContainer \
-            -p:ContainerRepository=microservice-movies \
-            -p:ContainerImageTag=1.0.0
+        run: dotnet publish src/Howestprime.Movies.Main/Howestprime.Movies.Main.csproj --configuration Release -t:PublishContainer -p:ContainerRepository=microservice-movies -p:ContainerImageTag=1.0.0
 
       - name: Tag and push image to ACR
         run: |
