@@ -70,12 +70,12 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Publish .NET app
-        run: dotnet publish src/Howestprime.Movies.Main/Howestprime.Movies.Main.csproj --configuration Release -t:PublishContainer -p:ContainerRepository=microservice-movies -p:ContainerImageTag=1.0.0
+        run: dotnet publish src/Howestprime.Movies.Main/Howestprime.Movies.Main.csproj --configuration Release -t:PublishContainer -p:ContainerRepository=microservice-movies -p:ContainerImageTag=1.0.1
 
       - name: Tag and push image to ACR
         run: |
-          docker tag microservice-movies:1.0.0 ${{ vars.AZ_CONTAINER_REGISTRY }}/microservice-movies:1.0.0
-          docker push ${{ vars.AZ_CONTAINER_REGISTRY }}/microservice-movies:1.0.0
+          docker tag microservice-movies:1.0.1 ${{ vars.AZ_CONTAINER_REGISTRY }}/microservice-movies:1.0.1
+          docker push ${{ vars.AZ_CONTAINER_REGISTRY }}/microservice-movies:1.0.1
 
   deploy:
       runs-on: ubuntu-latest
@@ -103,7 +103,7 @@ jobs:
                 --name microservice-movies \
                 --resource-group ${{ vars.AZ_RESOURCE_GROUP }} \
                 --environment ${{ vars.AZ_CONTAINER_ENVIRONMENT }} \
-                --image ${{ vars.AZ_CONTAINER_REGISTRY }}/microservice-movies:1.0.0 \
+                --image ${{ vars.AZ_CONTAINER_REGISTRY }}/microservice-movies:1.0.1 \
                 --registry-server ${{ vars.AZ_CONTAINER_REGISTRY }} \
                 --registry-username ${{ secrets.HOWESTPRIME_WIDE_CI_SERVICE_PRINCIPAL }} \
                 --registry-password ${{ secrets.HOWESTPRIME_WIDE_CI_SERVICE_PRINCIPAL_PASSWORD }} \
@@ -127,7 +127,7 @@ jobs:
               az containerapp update \
                 --name microservice-movies \
                 --resource-group ${{ vars.AZ_RESOURCE_GROUP }} \
-                --image ${{ vars.AZ_CONTAINER_REGISTRY }}/microservice-movies:1.0.0
+                --image ${{ vars.AZ_CONTAINER_REGISTRY }}/microservice-movies:1.0.1
             fi
              echo "Ensuring ingress is enabled..."
 
